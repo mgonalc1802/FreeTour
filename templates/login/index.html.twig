@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% endblock %}
+
+{% block body %}
+    {% if error %}
+        <div class="alert alert-danger">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+
+
+    <div class="container login-form">
+        <div class="contact-image">
+            <img src="{{ asset('images/login.png') }}" alt="rocket_contact"/>
+        </div>
+        <form method="post">
+            <h3>Iniciar Sesión</h3>
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="username" class="form-label">Email:</label>
+                    <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="password" class="form-label">Contraseña:</label>
+                    <input type="password" id="password" name="_password" class="form-control">
+                </div>
+            </div>
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+    </div>
+{% endblock %}
