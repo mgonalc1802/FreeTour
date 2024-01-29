@@ -1,13 +1,9 @@
-body
-{
-    background: -webkit-linear-gradient(left, #0072ff, #00c6ff);
-}
-
 .login-form
 {
     background: #fff;
     margin-top: 3%;
-    margin-bottom: 5%;
+    margin-bottom: 3%;
+    border-radius: 1em;
 }
 
 .login-form .form-control
@@ -30,6 +26,7 @@ body
 .login-form form
 {
     padding: 10%;
+    padding-bottom: 7%;
 }
 
 .login-form form div
@@ -37,21 +34,27 @@ body
     margin-left: 13%;
 }
 
-
-.login-form h3
+.login-form h1
 {
-    margin-bottom: 8%;
+    margin-bottom: 3%;
     margin-top: -10%;
     text-align: center;
-    color: #0062cc;
+    color: #1a3132;
 }
 
-button
-{
-    border-radius: 1em;
+.enviar
+{   
+    border-radius: 10px;
     padding: 1%;
     color: #fff;
-    background-color: #0062cc;
+    background-color: #67988e;
     border: none;
     cursor: pointer;
+    margin-left: 30%;
+    margin-top: 3%;
+}
+
+.enviar:hover
+{
+    background-color: #95b7b0;
 }

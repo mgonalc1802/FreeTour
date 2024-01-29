@@ -1,9 +1,32 @@
-.contenedor 
+.contenedorReg
 {
-    max-width: 80%;
+    max-width: 60%;
     background-color: #fff;
     border-radius: 8px;
-    padding: 20px;
+    padding: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: auto;
+    margin-bottom: 20px;
+}
+
+.contenedorReg h1
+{
+    padding-top: 10px;
+    text-align: center;
+    color: #1a3132;
+}
+
+.registrarse
+{   
+    border-radius: 10px;
+    padding: 1%;
+    color: #fff;
+    background-color: #67988e;
+    border: none;
+    cursor: pointer;
+}
+
+.registrarse:hover
+{
+    background-color: #95b7b0;
 }

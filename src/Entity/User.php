@@ -198,4 +198,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'email' => $this->getEmail(),
+            'nombre' => $this->getNombre(),
+            'apellido' => $this->getApellido(),
+            'apellido2' => $this->getApellido2(),
+            'urlFoto' => $this->getUrlFoto()
+            // 'reservas' => $this->getReservas()->toArray(),
+            // 'tours' => $this->getTours()->toArray(),
+        ];
+    }
 }

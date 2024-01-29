@@ -3,6 +3,11 @@
 {% block importmap %}{{ importmap('app') }}{% endblock %}
 {% block body %}
     
-    <a href = "listado">Listados De Alumnos</a>
+    <h1>Bienvenido a FreeTour</h1>
+    <h2>Estás en Home</h2>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <h3>Eres Administrador</h3>
+    {% endif %}
     <img src="{{ asset('images/logo.png') }}" weight = "100" height = "100"/>
 {% endblock %}

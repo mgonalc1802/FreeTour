@@ -32,6 +32,26 @@ class RegistrationController extends AbstractController
             )
             ->setRoles(['ROLE_USER']);
 
+            //Gestionar el archivo
+            $file = $form->get('url_foto')->getData();
+            if($file)
+            {
+                // Genera un nombre único para el archivo
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                // Mueve el archivo al directorio donde deseas almacenarlo
+                try {
+                    $file->move(
+                        $this->getParameter('uploads'), // en services.yaml
+                        $fileName
+                    );
+                } 
+                catch (FileException $e) 
+                {
+                }
+            
+                $user->setUrlFoto($fileName);
+            }
+
 
             $entityManager->persist($user);
             $entityManager->flush();

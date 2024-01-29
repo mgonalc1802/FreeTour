@@ -9,64 +9,63 @@
 {% block title %}Registro{% endblock %}
 
 {% block body %}
-    <div class="contenedor mt-4">
+    <div class = "contenedorReg mt-4">
         <h1 class="mb-4">Registro</h1>
 
-        <div class="contact__wrapper shadow-lg mt-n9">
+
+        <div class="contact__wrapper mt-n9 p-4">
             <div class="row no-gutters">
-                <div class="col-lg-12 contact-form__wrapper p-5 order-lg-1">
+                <div class="col-lg-12 contact-form__wrapper order-lg-1">
                     {{ form_errors(registrationForm) }}
-
-                        {{ form_start(registrationForm, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
-                        <div class="row">
-                            <div class="col-sm-6 mb-3">
-                                <div class="form-group">
-                                    {{ form_row(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'wendy12@gmail.com', 'required': 'required'}}) }}
-                                </div>
-                            </div>
-        
-                            <div class="col-sm-6 mb-3">
-                                <div class="form-group">
-                                    {{ form_row(registrationForm.nombre, {'attr': {'class': 'form-control', 'placeholder': 'Wendy'}}) }}
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 mb-3">
-                                <div class="form-group">
-                                    {{ form_row(registrationForm.plainPassword, {'label': 'Contraseña', 'attr': {'class': 'form-control', 'required': 'required'}}) }}
-                                </div>
-                            </div>
-        
-                            <div class="col-sm-6 mb-3">
-                                <div class="form-group">
-                                    {{ form_row(registrationForm.apellido, {'attr': {'class': 'form-control', 'placeholder': 'Apellido'}}) }}
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 mb-3">
-                                <div class="form-group">
-                                    {{ form_row(registrationForm.url_foto, {'label': 'Foto', 'attr': {'class': 'form-control'}}) }}
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 mb-3">
-                                <div class="form-group">
-                                    {{ form_row(registrationForm.apellido2, {'attr': {'class': 'form-control', 'placeholder': 'Segundo Apellido'}}) }}
-                                </div>
-                            </div>
-    
-                             <div class="form-check mb-3">
-                                {{ form_row(registrationForm.agreeTerms, {'label': 'Aceptar Términos'}) }}
-                            </div>
-
-                            <div class="col-sm-12 mb-3">
-                                <button type="submit" class="btn">Registrarse</button>
+                    {{ form_start(registrationForm, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                {{ form_row(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'wendy12@gmail.com', 'required': 'required'}}) }}
                             </div>
                         </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                {{ form_row(registrationForm.nombre, {'attr': {'class': 'form-control', 'placeholder': 'Wendy', 'required': 'required'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                {{ form_row(registrationForm.plainPassword, {'label': 'Contraseña', 'attr': {'class': 'form-control', 'required': 'required'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                {{ form_row(registrationForm.apellido, {'attr': {'class': 'form-control', 'placeholder': 'López', 'required': 'required'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                {{ form_row(registrationForm.url_foto, {'label': 'Foto', 'attr': {'class': 'form-control', 'required': 'required'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                {{ form_row(registrationForm.apellido2, {'label': 'Segundo Apellido', 'attr': {'class': 'form-control', 'placeholder': 'Hurtado'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            {{ form_row(registrationForm.agreeTerms, {'label': 'Aceptar Términos'}) }}
+                        </div>
+
+                        <div class="col-sm-12 mb-3">
+                            <button type="submit" class = "registrarse">Registrarse</button>
+                        </div>
+                    </div>
                     {{ form_end(registrationForm) }}
                 </div>
             </div>
         </div>
-    </div>
     </div>
 {% endblock %}

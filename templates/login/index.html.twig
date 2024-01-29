@@ -21,7 +21,7 @@
             <img src="{{ asset('images/login.png') }}" alt="rocket_contact"/>
         </div>
         <form method="post">
-            <h3>Iniciar Sesión</h3>
+            <h1>Iniciar Sesión</h1>
             <div class="col-md-8">
                 <div class="form-group">
                     <label for="username" class="form-label">Email:</label>
@@ -32,7 +32,9 @@
                     <input type="password" id="password" name="_password" class="form-control">
                 </div>
             </div>
-            <button type="submit">Iniciar Sesión</button>
+            <div class = "col-md-12">
+                <button class = "enviar" type = "submit">Iniciar Sesión</button>
+            </div>
         </form>
     </div>
 {% endblock %}

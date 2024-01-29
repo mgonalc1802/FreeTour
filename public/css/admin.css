@@ -1,0 +1,52 @@
+.logo span, .user-name
+{
+    color: black;
+    font-weight: 700;
+}
+
+.sidebar
+{
+    background-color: #67988e;
+}
+
+.menu-item span, .menu-item i::before, .content-header-title h1, .fa-stack .user-avatar-icon-foreground::before
+{
+    color: black;
+}
+
+.menu li:hover
+{
+    background-color: #a4c1bb;
+}
+
+.main-content aside
+{
+    background-color: #314647;
+}
+
+.content-wrapper, .main-content
+{
+    background: -webkit-linear-gradient(top, #a4c1bb, #d7dcd7);
+}
+
+.content-header
+{
+    background-color:  #a4c1bb;
+}
+
+.btn
+{
+    background-color: #486a63;
+    color: white;
+}
+
+.btn:hover
+{
+    background-color: #516b66;
+    color: white;
+}
+
+#User_password_first, #User_password_second
+{
+    width: 41%;
+}

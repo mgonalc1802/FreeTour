@@ -14,32 +14,25 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Repository\UserRepository;
 
-
 class UsuarioController extends AbstractController
 {
     #[Route('/api/usuario/{id}',  methods: ["GET"])]
     public function getUsuario(User $usuario): Response
-    {
-
-        // TODO query the database
-        $user = 
-        [
-            'id' => $usuario->getId(),
-            'nombre' => $usuario->getNombre(),
-            'apellido' => $usuario->getApellido(),
-            'apellido2' => $usuario->getApellido2(),
-            'roles' => $usuario->getRoles(),
-            'url_foto' => "url_foto"
-        ];
-        
-        return new JsonResponse($user);
+    {        
+        return new JsonResponse($usuario->jsonSerialize());
     }
 
-    #[Route('/api/usuarios',  methods: ["GET"])]
-    public function getUsuarios(UserRepository $userRep): Response
+    #[Route('/api/usuarios', methods: ["GET"])]
+    public function getUsuarios(UserRepository $userRepository): JsonResponse
     {
-        $usuarios = $userRep->findAll();
-        
-        return new JsonResponse($usuarios);
+        $usuarios = $userRepository->findAll();
+
+        $usuariosArray = [];
+        foreach ($usuarios as $usuario) 
+        {
+            $usuariosArray[] = $usuario->jsonSerialize();
+        }
+
+        return new JsonResponse($usuariosArray);
     }
 }

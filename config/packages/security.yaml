@@ -28,7 +28,7 @@ security:
                     # "app_login" is the name of the route created previously
                     login_path: app_login
                     check_path: app_login
-                    default_target_path: /email
+                    default_target_path: /
             logout:
                 path: /logout
                 target: /login
