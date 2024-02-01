@@ -33,6 +33,9 @@ class Item
     #[ORM\JoinColumn(nullable: false)]
     private ?Localidad $localidad = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $coordenadas = null;
+
     public function __construct()
     {
         $this->rutas = new ArrayCollection();
@@ -114,6 +117,18 @@ class Item
     public function setLocalidad(?Localidad $localidad): static
     {
         $this->localidad = $localidad;
+
+        return $this;
+    }
+
+    public function getCoordenadas(): ?string
+    {
+        return $this->coordenadas;
+    }
+
+    public function setCoordenadas(string $coordenadas): static
+    {
+        $this->coordenadas = $coordenadas;
 
         return $this;
     }

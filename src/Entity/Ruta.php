@@ -33,6 +33,18 @@ class Ruta
     #[ORM\ManyToMany(targetEntity: Item::class, inversedBy: 'rutas')]
     private Collection $item;
 
+    #[ORM\Column]
+    private ?int $aforo = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $programacion = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $fechaComienzo = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $fechaFin = null;
+
     public function __construct()
     {
         $this->item = new ArrayCollection();
@@ -111,6 +123,54 @@ class Ruta
     public function removeItem(Item $item): static
     {
         $this->item->removeElement($item);
+
+        return $this;
+    }
+
+    public function getAforo(): ?int
+    {
+        return $this->aforo;
+    }
+
+    public function setAforo(int $aforo): static
+    {
+        $this->aforo = $aforo;
+
+        return $this;
+    }
+
+    public function getProgramacion(): ?string
+    {
+        return $this->programacion;
+    }
+
+    public function setProgramacion(?string $programacion): static
+    {
+        $this->programacion = $programacion;
+
+        return $this;
+    }
+
+    public function getFechaComienzo(): ?\DateTimeInterface
+    {
+        return $this->fechaComienzo;
+    }
+
+    public function setFechaComienzo(\DateTimeInterface $fechaComienzo): static
+    {
+        $this->fechaComienzo = $fechaComienzo;
+
+        return $this;
+    }
+
+    public function getFechaFin(): ?\DateTimeInterface
+    {
+        return $this->fechaFin;
+    }
+
+    public function setFechaFin(\DateTimeInterface $fechaFin): static
+    {
+        $this->fechaFin = $fechaFin;
 
         return $this;
     }

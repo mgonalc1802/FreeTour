@@ -3,6 +3,9 @@
 // src/Controller/MailerController.php
 namespace App\Controller;
 
+use App\Service\MessageGenerator;
+use App\Service\EmailService;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -28,6 +31,19 @@ class MailerController extends AbstractController
         $mailer->send($email);
 
         return new Response('Correo enviado.');
+    }
+
+    #[Route("/enviarEmail/{id}", name: 'enviarEmail')]
+    public function new(User $user, EmailService $EmailService): Response
+    {
+
+        if ($EmailService->mandaEmail("mara@gmail.com", $user->getEmail())) 
+        {
+            $this->addFlash('success', 'Notification mail was sent successfully.');
+        }
+
+        return new Response('Site Enviado');
+
     }
 }
 

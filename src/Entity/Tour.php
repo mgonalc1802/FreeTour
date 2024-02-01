@@ -31,6 +31,9 @@ class Tour
     #[ORM\JoinColumn(nullable: false)]
     private ?Informe $informe = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $guia = null;
+
     public function __construct()
     {
         $this->reservas = new ArrayCollection();
@@ -103,6 +106,18 @@ class Tour
     public function setInforme(Informe $informe): static
     {
         $this->informe = $informe;
+
+        return $this;
+    }
+
+    public function getGuia(): ?string
+    {
+        return $this->guia;
+    }
+
+    public function setGuia(string $guia): static
+    {
+        $this->guia = $guia;
 
         return $this;
     }

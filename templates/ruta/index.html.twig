@@ -1,20 +1,166 @@
-{% extends 'base.html.twig' %}
+{% include '@EasyAdmin/page/content.html.twig' %}
 
-{% block title %}Hello RutaController!{% endblock %}
+<div id = "ruta">
+<!-- Cargar archivos JS de JQuery UI -->
+    <script src = "js/jquery-3.7.1.js"></script>
+    <script src = "js/jquery-ui.js"></script> 
+    <script src = "js/crearRuta.js"></script> 
+    <script>
+        $(function ()
+        {
+            var ruta = $("#ruta");
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+            $(".content").append(ruta);
+        }) 
+    </script>
+    
+    <!-- Cargar los CSS de JQuery UI -->
+    <link rel = "stylesheet" href = "CSS/jquery/jquery-ui.css" type = "text/css">
+    <link rel = "stylesheet" href = "CSS/jquery/jquery-ui.structure.css" type = "text/css">
+    <link rel = "stylesheet" href = "CSS/jquery/jquery-ui.theme.css" type = "text/css">
+    <link rel = "stylesheet" href = "{{ asset('css/estilo/crearRuta.css') }}" type = "text/css">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <table class = "table datagrid ">
+        <thead>
+            <tr>
+                <th>
+                    <div class = "form-check">
+                    <span><input type="checkbox" class = "form-check-input form-batch-checkbox-all" id = "form-batch-checkbox-all"></span>
+                    </div>
+                </th>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/localMD/FreeTour/src/Controller/RutaController.php'|file_link(0) }}">src/Controller/RutaController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/localMD/FreeTour/templates/ruta/index.html.twig'|file_link(0) }}">templates/ruta/index.html.twig</a></code></li>
-    </ul>
+                                                                                
+                <th data-column="email" class = "  header-for-field-email text-" dir="ltr">
+                    <a href = "http://127.0.0.1:8000/admin?crudAction=index&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController&amp;page=1&amp;sort%5Bemail%5D=DESC">
+                    Email <i class = "fa fa-fw fa-sort"></i>
+                    </a>
+                </th>
+                                        
+                <th data-column="nombre" class = "  header-for-field-text text-" dir="ltr">
+                    <a href = "http://127.0.0.1:8000/admin?crudAction=index&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController&amp;page=1&amp;sort%5Bnombre%5D=DESC">
+                    Nombre <i class = "fa fa-fw fa-sort"></i>
+                    </a>
+                </th>
+                                    
+                <th data-column="apellido" class = "  header-for-field-text text-" dir="ltr">
+                    <a href = "http://127.0.0.1:8000/admin?crudAction=index&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController&amp;page=1&amp;sort%5Bapellido%5D=DESC">
+                    Apellido <i class = "fa fa-fw fa-sort"></i>
+                    </a>
+                </th>
+                                    
+                <th data-column="apellido2" class = "  header-for-field-text text-" dir="ltr">
+                    <a href = "http://127.0.0.1:8000/admin?crudAction=index&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController&amp;page=1&amp;sort%5Bapellido2%5D=DESC">
+                    Apellido2 <i class = "fa fa-fw fa-sort"></i>
+                    </a>
+                </th>  
+
+                <th data-column="roles" class = "  header-for-field-array text-" dir="ltr">
+                    <a href = "http://127.0.0.1:8000/admin?crudAction=index&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController&amp;page=1&amp;sort%5Broles%5D=DESC">
+                        Roles <i class = "fa fa-fw fa-sort"></i>
+                    </a>
+                </th>
+                                    
+                <th data-column="url_foto" class = " field-virtual header-for-field-image text-center" dir="ltr">
+                    <span>Url Foto</span>
+                </th>
+
+                <th class = "actions-as-dropdown-table-head" dir="ltr">
+                    <span class = "sr-only">Actions</span>
+                </th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr data-id = "2">
+                <td class = "batch-actions-selector">
+                    <div class = "form-check">
+                        <input type="checkbox" class = "form-check-input form-batch-checkbox" id = "form-batch-checkbox-0" value="2" data-row-index="0">
+                    </div>
+                </td>
+
+                <td data-column="email" data-label="Email" class = " text- field-email" dir="ltr">
+                    <a href = "mailto:mariadoloresga18@gmail.com">mariadoloresga18@gmail.com</a>
+                </td>
+
+                <td data-column="nombre" data-label="Nombre" class = " text- field-text" dir="ltr">
+                    <span title="Maria Dolores">Maria Dolores</span>
+                </td>
+
+                <td data-column="apellido" data-label="Apellido" class = " text- field-text" dir="ltr">
+                    <span title="González">González</span>
+                </td>
+
+                <td data-column="apellido2" data-label="Apellido2" class = " text- field-text" dir="ltr">
+                    <span title="Alcalá">Alcalá</span>
+                </td>
+
+                <td data-column="roles" data-label="Roles" class = " text- field-array" dir="ltr">
+                    ROLE_ADMIN, ROLE_USER
+                </td>
+
+                <td data-column="url_foto" data-label="Url Foto" class = " text-center field-image" dir="ltr">
+                    <span class = "badge badge-outline">Null</span>
+                </td>
+
+                <td class = "actions actions-as-dropdown">
+                    <div class = "dropdown dropdown-actions">
+                       <a class = "dropdown-toggle" href = "#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="21" width="21" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                            </svg>
+                        </a>
+
+                        <div class = "dropdown-menu dropdown-menu-right">
+                            <a class = "dropdown-item action-detail" href = "http://127.0.0.1:8000/admin?crudAction=detail&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController&amp;entityId = 2" data-action-name = "detail"><span class = "action-label">Show</span></a>
+
+                            <a class = "dropdown-item action-edit" href = "http://127.0.0.1:8000/admin?crudAction=edit&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController&amp;entityId = 2" data-action-name = "edit"><span class = "action-label">Edit</span></a>
+
+                            <a class = "dropdown-item action-delete text-danger" href = "http://127.0.0.1:8000/admin?crudAction=delete&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController&amp;entityId = 2" data-action-name = "delete" formaction="http://127.0.0.1:8000/admin?crudAction=delete&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController&amp;entityId = 2" data-bs-toggle="modal" data-bs-target="#modal-delete"><span class = "action-label">Delete</span></a>
+
+                        </div>
+                    </div>
+                </td>
+            </tr>    
+        </tbody>
+
+        <tfoot>
+        </tfoot>
+    </table>
+    <h2>Crear Ruta</h2>
+
+    <form action = "/rutas" method="post">
+        <!-- Título -->
+        <label for = "titulo">Título:</label>
+        <input type = "text" id = "titulo" name = "titulo" maxlength = "60" required>
+
+        <!-- Coordenada de Inicio -->
+        <label for = "coordenada_inicio">Coordenada de Inicio:</label>
+        <input type = "text" id = "coordenada_inicio" name = "coordenada_inicio" maxlength = "255" required>
+
+        <!-- Descripción -->
+        <label for = "descripcion">Descripción:</label>
+        <textarea id = "descripcion" name = "descripcion" rows = "4" required></textarea>
+
+        <!-- URL de la Foto -->
+        <label for = "url_foto">URL de la Foto:</label>
+        <input type = "text" id = "url_foto" name = "url_foto" maxlength = "255" required>
+
+        <!-- Aforo -->
+        <label for = "aforo">Aforo:</label>
+        <input type = "number" id = "aforo" name = "aforo" min = "1" max = "20" required>
+
+        <div id = "fecSali">
+            <p>Inicio: </p>
+            <input type = "text" name = "salida" id = "salida">
+        </div>
+        
+        <div id = "fecLleg">
+            <p>Fin: </p>
+            <input type = "text" name = "llegada" id = "llegada">
+        </div>
+
+        <!-- Botón de Enviar -->
+        <button type = "submit">Enviar</button>
+    </form>
+
 </div>
-{% endblock %}
