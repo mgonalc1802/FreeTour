@@ -2,61 +2,61 @@
     {
         "item": 1,
         "titulo": "Item 1",
-        "foto": "imagen1.jpg",
+        "foto": "images/login.png",
         "coordenadas": 40
     },
     {
         "item": 2,
         "titulo": "Item 2",
-        "foto": "imagen2.jpg",
+        "foto": "images/login.png",
         "coordenadas": 40
     },
     {
         "item": 3,
         "titulo": "Item 3",
-        "foto": "imagen3.jpg",
+        "foto": "images/login.png",
         "coordenadas": 40
     },
     {
         "item": 4,
         "titulo": "Item 4",
-        "foto": "imagen4.jpg",
+        "foto": "images/login.png",
         "coordenadas": 40
     },
     {
         "item": 5,
         "titulo": "Item 5",
-        "foto": "imagen5.jpg",
+        "foto": "images/login.png",
         "coordenadas": 40
     },
     {
         "item": 6,
         "titulo": "Item 6",
-        "foto": "imagen6.jpg",
+        "foto": "images/login.png",
         "coordenadas": 40
     },
     {
         "item": 7,
         "titulo": "Item 7",
-        "foto": "imagen7.jpg",
+        "foto": "images/login.png",
         "coordenadas": 40
     },
     {
         "item": 8,
         "titulo": "Item 8",
-        "foto": "imagen8.jpg",
+        "foto": "images/login.png",
         "coordenadas": 40
     },
     {
         "item": 9,
         "titulo": "Item 9",
-        "foto": "imagen9.jpg",
+        "foto": "images/login.png",
         "coordenadas": 40
     },
     {
         "item": 10,
         "titulo": "Item 10",
-        "foto": "imagen10.jpg",
+        "foto": "images/login.png",
         "coordenadas": 40
     }
 ]

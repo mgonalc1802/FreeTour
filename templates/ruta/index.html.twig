@@ -7,10 +7,12 @@
     <script src = "js/crearRuta.js"></script> 
     <script type = "text/javascript" src="js/jquery.richtext.js"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
     
     <!-- Cargar los CSS de JQuery UI -->
-    <link rel = "stylesheet" href = "CSS/jquery/jquery-ui.css" type = "text/css">
+    {# <link rel = "stylesheet" href = "CSS/jquery/jquery-ui.css" type = "text/css"> #}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel = "stylesheet" href = "CSS/jquery/jquery-ui.structure.css" type = "text/css">
     <link rel = "stylesheet" href = "CSS/jquery/jquery-ui.theme.css" type = "text/css">
     <link rel = "stylesheet" href = "https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -26,6 +28,21 @@
             $(".content").append(ruta);
         }) 
     </script>
+
+    <style>
+        #gallery { float: left; width: 65%; min-height: 12em; }
+        .gallery.custom-state-active { background: #eee; }
+        .gallery li { float: left; width: 96px; padding: 0.4em; margin: 0 0.4em 0.4em 0; text-align: center; }
+        .gallery li h5 { margin: 0 0 0.4em; cursor: move; }
+        .gallery li a { float: right; }
+        .gallery li a.ui-icon-zoomin { float: left; }
+        .gallery li img { width: 100%; cursor: move; }
+        
+        #itemSelec { float: right; width: 32%; min-height: 18em; padding: 1%; }
+        #itemSelec h4 { line-height: 16px; margin: 0 0 0.4em; }
+        #itemSelec h4 .ui-icon { float: left; }
+        #itemSelec .gallery h5 { display: none; }
+    </style>
 
     <section class = "content-header">
         <div class = "content-header-title">
@@ -78,9 +95,47 @@
             <input type = "text" name = "llegada" id = "llegada">
         </div>
 
-        <select name = "items" id = "items" size = "5" disabled>
+        <div class="ui-widget ui-helper-clearfix">
+            <ul id = "gallery" class="gallery ui-helper-reset ui-helper-clearfix">
+                <li class="ui-widget-content ui-corner-tr">
+                    <h5 class="ui-widget-header">Prueba 1</h5>
+                    <img src="images/login.png" alt="The peaks of High Tatras" width="96" height="72">
+                    <a href="images/login.png" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+                    <a href="link/to/itemSelec/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-itemSelec">Delete image</a>
+                </li>
+                <li class="ui-widget-content ui-corner-tr">
+                    <h5 class="ui-widget-header">High Tatras 2</h5>
+                    <img src="images/login.png" alt="The chalet at the Green mountain lake" width="96" height="72">
+                    <a href="images/login.png" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+                    <a href="link/to/itemSelec/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-itemSelec">Delete image</a>
+                </li>
+                <li class="ui-widget-content ui-corner-tr">
+                    <h5 class="ui-widget-header">High Tatras 3</h5>
+                    <img src="images/login.png" alt="Planning the ascent" width="96" height="72">
+                    <a href="images/login.png" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+                    <a href="link/to/itemSelec/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-itemSelec">Delete image</a>
+                </li>
+                <li class="ui-widget-content ui-corner-tr">
+                    <h5 class="ui-widget-header">High Tatras 4</h5>
+                    <img src="images/login.png" alt="On top of Kozi kopka" width="96" height="72">
+                    <a href="images/login.png" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+                    <a href="link/to/itemSelec/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-itemSelec">Delete image</a>
+                </li>
+            </ul>
+            
+            <div id = "itemSelec" class="ui-widget-content ui-state-default">
+                <h4 class="ui-widget-header"><span class="ui-icon ui-icon-itemSelec">itemSelec</span> itemSelec</h4>
+            </div>
+        
+        </div>
+
+        {# <select name = "items" id = "items" size = "5">
 
         </select>
+
+        <select name = "itemSelec" id = "itemSelect" size = "5">
+
+        </select> #}
 
         <!-- Botón de Enviar -->
         <button id = "enviar" type = "submit">Enviar</button>

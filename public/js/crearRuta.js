@@ -1,8 +1,145 @@
 //Espera a que la página cargue
 $(function()
 {
+    var gallery = $( "#gallery" );
+
+    traerItems(gallery);
+
+    // There's the gallery and the trash
+    var trash = $( "#itemSelec" );    
+
+    // Let the trash be droppable, accepting the gallery items
+    trash.droppable(
+    {
+        accept: "#gallery > li",
+        classes: {
+            "ui-droppable-active": "ui-state-highlight"
+        },
+        drop: function( event, ui ) {
+            deleteImage( ui.draggable );
+        }
+    });
+
+    // Let the gallery be droppable as well, accepting items from the trash
+    gallery.droppable(
+    {
+        accept: "#trash li",
+        classes: {
+            "ui-droppable-active": "custom-state-active"
+        },
+        drop: function( event, ui ) {
+            recycleImage( ui.draggable );
+        }
+    });
+
+    // Image deletion function
+    var recycle_icon = "<a href='link/to/recycle/script/when/we/have/js/off' title='Recycle this image' class='ui-icon ui-icon-refresh'>Recycle image</a>";
+    function deleteImage( $item ) 
+    {
+        $item.fadeOut(function() 
+        {
+            var $list = $( "ul", trash ).length ?
+            $( "ul", trash ) :
+            $( "<ul class='gallery ui-helper-reset'/>" ).appendTo( trash );
+
+            $item.find( "a.ui-icon-trash" ).remove();
+            $item.append( recycle_icon ).appendTo( $list ).fadeIn(function() {
+            $item
+                .animate({ width: "48px" })
+                .find( "img" )
+                .animate({ height: "36px" });
+            });
+        });
+    }
+
+    // Image recycle function
+    var trash_icon = "<a href='link/to/trash/script/when/we/have/js/off' title='Delete this image' class='ui-icon ui-icon-trash'>Delete image</a>";
+    function recycleImage( $item ) 
+    {
+        $item.fadeOut(function() 
+        {
+            $item
+            .find( "a.ui-icon-refresh" )
+            .remove()
+            .end()
+            .css( "width", "96px")
+            .append( trash_icon )
+            .find( "img" )
+            .css( "height", "72px" )
+            .end()
+            .appendTo( gallery )
+            .fadeIn();
+        });
+    }
+
+    // Image preview function, demonstrating the ui.dialog used as a modal window
+    function viewLargerImage( $link ) 
+    {
+        var src = $link.attr( "href" ),
+            title = $link.siblings( "img" ).attr( "alt" ),
+            $modal = $( "img[src$='" + src + "']" );
+
+        if ( $modal.length ) 
+        {
+            $modal.dialog( "open" );
+        }
+        else 
+        {
+            var img = $( "<img alt='" + title + "' width='384' height='288' style='display: none; padding: 8px;' />" )
+            .attr( "src", src ).appendTo( "body" );
+            setTimeout(function()
+            {
+                img.dialog(
+                {
+                    title: title,
+                    width: 400,
+                    modal: true
+                });
+            }, 1 );
+        }
+    }
+
+    // Resolve the icons behavior with event delegation
+    $( "ul.gallery > li" ).on( "click", function( event ) 
+    {
+        var $item = $( this ),
+            $target = $( event.target );
+
+        if ( $target.is( "a.ui-icon-trash" ) ) 
+        {
+            deleteImage( $item );
+        } 
+        else if ( $target.is( "a.ui-icon-zoomin" ) ) 
+        {
+            viewLargerImage( $target );
+        } 
+        else if ( $target.is( "a.ui-icon-refresh" ) )
+        {
+            recycleImage( $item );
+        }
+
+        return false;
+    });
+
     //Indica que el textarea sea un richText
     $('.textArea').richText();
+
+    //Indica que el select que muestra los items es draggable
+    $("#items").draggable(
+    {
+        helper: "clone",
+        revert: "invalid"
+    });
+
+    //Indica que el select vacío es droppable
+    $("#items").droppable(
+    {
+        accept: "#selectDraggable option",
+        drop: function (event, ui) 
+        {
+            $(this).append(ui.helper.children());
+        }
+    });
 
     //Llama a un método para asignar datePicker personalizados
     personalizaDatePicker();
@@ -11,9 +148,7 @@ $(function()
     var enviar = $("#enviar");
     var buscar = $("#buscarMapa");
 
-    var items = $("#items");
-
-    traerItems(items);
+    
 
     buscar.click(function(ev)
     {
@@ -29,10 +164,6 @@ $(function()
         //Obtiene los datos del formulario
         var titulo = $("#titulo").val();
         var descripcion = $("#descripcion").val();   
-
-        // foto = subirFoto();
-        // console.log(foto);
-        // traerItems();
     })
 })
 
@@ -111,12 +242,12 @@ function generaMapa()
                 var map = L.map('map').setView([latitud, longitud], 13);
 
                 //Agrega una capa de mapa (por ejemplo, OpenStreetMap)
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
+                {
                     attribution: '© OpenStreetMap contributors'
                 }).addTo(map);
 
-                L.marker([latitud, longitud]).addTo(map)
-                    .openPopup();
+                L.marker([latitud, longitud]).addTo(map).openPopup();
             } 
             else 
             {
@@ -168,10 +299,35 @@ function traerItems(elemento)
         cache: false,
         success:function(data) //Respuesta si obtiene los datos necesarios
         {
-            $.each(data, function(index, option) 
+            $.each(data, function (index, option) {
+                console.log(option.titulo)
+                //Crea la nueva lista
+                var liElement = $('<li class="ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle"></li>');
+
+                //Añade la cabecera
+                liElement.append('<h5 class="ui-widget-header">' + option.titulo + '</h5>');
+
+                //Añade la imagen
+                liElement.append('<img src="' + option.foto + '" alt="' + option.titulo + '" width="96" height="72">');
+                
+                //Añade el borrar link
+                liElement.append('<a href="' + option.foto + '" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>');
+
+                //Añade el borrar link
+                liElement.append('<a href="link/to/itemSelec/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-itemSelec">Delete image</a>');
+
+                // Append the list item to the provided element
+                elemento.append(liElement);
+            });
+
+            //Hace que los datos de galeria sean droppables
+            $( "li", elemento ).draggable(
             {
-                //Rellena el elemento con los items
-                elemento.append('<option value="' + option.item + '">' + option.titulo + '</option>'); 
+                cancel: "a.ui-icon", // clicking an icon won't initiate dragging
+                revert: "invalid", // when not dropped, the item will revert back to its initial position
+                containment: "document",
+                helper: "clone",
+                cursor: "move"
             });
         },
         error:function(err) //Respuesta si da error
