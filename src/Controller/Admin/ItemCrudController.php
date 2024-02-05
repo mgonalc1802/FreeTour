@@ -24,7 +24,7 @@ class ItemCrudController extends AbstractCrudController
                 ->setUploadDir("public/fotos")
                 ->setBasePath("fotos")
                 ->setUploadedFileNamePattern('[contenthash].[extension]')
-                ->addHtmlContentsToBody("<img src='/fotos/fotoPregunta1.jpg' class='img-fluid'>")
+                // ->addHtmlContentsToBody("<img src='/fotos/fotoPregunta1.jpg' class='img-fluid'>")
                 ->setFormTypeOption('attr', ['class' => 'wrapper']),
             AssociationField::new("localidad"),
             TextField::new('coordenadas')

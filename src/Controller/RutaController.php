@@ -15,4 +15,26 @@ class RutaController extends AbstractController
             'controller_name' => 'RutaController',
         ]);
     }
+
+    #[Route('/API/subirArchivos', name: "subirArchivos", methods: ['POST'])]
+    public function subirArchivos()
+    {
+        //Definiciones
+        $to_path = "images/items";
+
+        //Mover el archivo
+        $nuevoArchivo = $to_path . "/" . $_FILES['file']['name'];
+        if (move_uploaded_file($_FILES["file"]["tmp_name"], $nuevoArchivo)) 
+        {
+            return json_encode(["success" => true]);
+        }
+        else
+        {
+            return json_encode(["success" => false]);
+        }
+
+
+    }
+    
+
 }

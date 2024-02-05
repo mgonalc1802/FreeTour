@@ -1,0 +1,143 @@
+{% include '@EasyAdmin/page/content.html.twig' %}
+
+<div id = "ruta">
+<!-- Cargar archivos JS de JQuery UI -->
+    <script src = "js/jquery-3.7.1.js"></script>
+    <script src = "js/jquery-ui.js"></script> 
+    <script src = "js/crearRuta.js"></script> 
+    <!-- Cargar los CSS de JQuery UI -->
+    <link rel = "stylesheet" href = "CSS/jquery/jquery-ui.css" type = "text/css">
+    <link rel = "stylesheet" href = "CSS/jquery/jquery-ui.structure.css" type = "text/css">
+    <link rel = "stylesheet" href = "CSS/jquery/jquery-ui.theme.css" type = "text/css">
+    <link rel = "stylesheet" href = "{{ asset('css/estilo/crearRuta.css') }}" type = "text/css">
+    <script>
+        $(function ()
+        {
+            var ruta = $("#ruta");
+
+            $(".content").append(ruta);
+        }) 
+    </script>
+
+    <section class="content-header">
+        <div class = "content-header-title">
+            <h1 class = "title" >Rutas</h1>
+        </div>
+
+        <div class="page-actions">    
+            <div class="global-actions">
+                <a class=" action-new btn btn-primary" href="http://127.0.0.1:8000/admin?crudAction=new&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController" data-action-name="new"><span class="action-label">Añadir Ruta</span></a>
+            </div>
+            <div class="batch-actions d-none">
+                    <a class=" action-batchDelete btn btn-danger pr-0" href="http://127.0.0.1:8000/admin?crudAction=batchDelete&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController" data-action-name="batchDelete" data-bs-toggle="modal" data-bs-target="#modal-batch-action" data-action-csrf-token="1a8e822503a35173559.ksKLzxK3G7b7AQv7LRWTYGzErbdpsb81VH7hRnaZniw.yKXkq3joUuCDdkLKZWX0LFmrn_ta-vNcYxG1AwTp2EPThu64R_1WxoFVWg" data-action-batch="true" data-entity-fqcn="App\Entity\User" data-action-url="http://127.0.0.1:8000/admin?crudAction=batchDelete&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController"><span class="action-label">Delete</span></a>
+            </div>
+        </div>
+    </section>
+    
+    <table class = "table datagrid ">
+        <thead>
+            <tr>
+                <th>
+                    <div class = "form-check">
+                    <span><input type="checkbox" class = "form-check-input form-batch-checkbox-all" id = "form-batch-checkbox-all"></span>
+                    </div>
+                </th>
+
+                                                                                
+                <th data-column="email" class = "  header-for-field-email text-" dir="ltr">
+                    <a href = "http://127.0.0.1:8000/admin?crudAction=index&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController&amp;page=1&amp;sort%5Bemail%5D=DESC">
+                    Email <i class = "fa fa-fw fa-sort"></i>
+                    </a>
+                </th>
+                                        
+                <th data-column="nombre" class = "  header-for-field-text text-" dir="ltr">
+                    <a href = "http://127.0.0.1:8000/admin?crudAction=index&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController&amp;page=1&amp;sort%5Bnombre%5D=DESC">
+                    Nombre <i class = "fa fa-fw fa-sort"></i>
+                    </a>
+                </th>
+                                    
+                <th data-column="apellido" class = "  header-for-field-text text-" dir="ltr">
+                    <a href = "http://127.0.0.1:8000/admin?crudAction=index&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController&amp;page=1&amp;sort%5Bapellido%5D=DESC">
+                    Apellido <i class = "fa fa-fw fa-sort"></i>
+                    </a>
+                </th>
+                                    
+                <th data-column="apellido2" class = "  header-for-field-text text-" dir="ltr">
+                    <a href = "http://127.0.0.1:8000/admin?crudAction=index&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController&amp;page=1&amp;sort%5Bapellido2%5D=DESC">
+                    Apellido2 <i class = "fa fa-fw fa-sort"></i>
+                    </a>
+                </th>  
+
+                <th data-column="roles" class = "  header-for-field-array text-" dir="ltr">
+                    <a href = "http://127.0.0.1:8000/admin?crudAction=index&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController&amp;page=1&amp;sort%5Broles%5D=DESC">
+                        Roles <i class = "fa fa-fw fa-sort"></i>
+                    </a>
+                </th>
+                                    
+                <th data-column="url_foto" class = " field-virtual header-for-field-image text-center" dir="ltr">
+                    <span>Url Foto</span>
+                </th>
+
+                <th class = "actions-as-dropdown-table-head" dir="ltr">
+                    <span class = "sr-only">Actions</span>
+                </th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr data-id = "2">
+                <td class = "batch-actions-selector">
+                    <div class = "form-check">
+                        <input type="checkbox" class = "form-check-input form-batch-checkbox" id = "form-batch-checkbox-0" value="2" data-row-index="0">
+                    </div>
+                </td>
+
+                <td data-column="email" data-label="Email" class = " text- field-email" dir="ltr">
+                    <a href = "mailto:mariadoloresga18@gmail.com">mariadoloresga18@gmail.com</a>
+                </td>
+
+                <td data-column="nombre" data-label="Nombre" class = " text- field-text" dir="ltr">
+                    <span title="Maria Dolores">Maria Dolores</span>
+                </td>
+
+                <td data-column="apellido" data-label="Apellido" class = " text- field-text" dir="ltr">
+                    <span title="González">González</span>
+                </td>
+
+                <td data-column="apellido2" data-label="Apellido2" class = " text- field-text" dir="ltr">
+                    <span title="Alcalá">Alcalá</span>
+                </td>
+
+                <td data-column="roles" data-label="Roles" class = " text- field-array" dir="ltr">
+                    ROLE_ADMIN, ROLE_USER
+                </td>
+
+                <td data-column="url_foto" data-label="Url Foto" class = " text-center field-image" dir="ltr">
+                    <span class = "badge badge-outline">Null</span>
+                </td>
+
+                <td class = "actions actions-as-dropdown">
+                    <div class = "dropdown dropdown-actions">
+                       <a class = "dropdown-toggle" href = "#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="21" width="21" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                            </svg>
+                        </a>
+
+                        <div class = "dropdown-menu dropdown-menu-right">
+                            <a class = "dropdown-item action-detail" href = "http://127.0.0.1:8000/admin?crudAction=detail&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController&amp;entityId = 2" data-action-name = "detail"><span class = "action-label">Show</span></a>
+
+                            <a class = "dropdown-item action-edit" href = "http://127.0.0.1:8000/admin?crudAction=edit&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController&amp;entityId = 2" data-action-name = "edit"><span class = "action-label">Edit</span></a>
+
+                            <a class = "dropdown-item action-delete text-danger" href = "http://127.0.0.1:8000/admin?crudAction=delete&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController&amp;entityId = 2" data-action-name = "delete" formaction="http://127.0.0.1:8000/admin?crudAction=delete&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController&amp;entityId = 2" data-bs-toggle="modal" data-bs-target="#modal-delete"><span class = "action-label">Delete</span></a>
+
+                        </div>
+                    </div>
+                </td>
+            </tr>    
+        </tbody>
+
+        <tfoot>
+        </tfoot>
+    </table>
+</div>
