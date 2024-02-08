@@ -21,20 +21,36 @@ class ItemRepository extends ServiceEntityRepository
         parent::__construct($registry, Item::class);
     }
 
-//    /**
-//     * @return Item[] Returns an array of Item objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('i.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @return Item[] Devuelve un array del objeto Item filtrados por localidad
+    */
+   public function findByLocalidad($localidad): array
+   {
+        return $this->createQueryBuilder('p')
+            ->join('p.localidad', 'l') // Unir la tabla Localidad con el alias 'l'
+            ->andWhere('l.nombre LIKE :localidad') // Filtrar por nombre de localidad
+            ->setParameter('localidad', $localidad)
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+   }
+
+   /**
+    * @return Item[] Devuelve un array de objetos del objeto Item filtrados por provincia
+    */
+    public function findByProvincia($provincia): array
+    {
+        return $this->createQueryBuilder('i')
+            ->join('i.localidad', 'l') // Unir la tabla Localidad con el alias 'l'
+            ->join('l.provincia', 'p') // Unir la tabla Provincia con el alias 'p'
+            ->andWhere('p.nombre LIKE :provincia') // Filtrar por nombre de provincia
+            ->setParameter('provincia', $provincia)
+            ->orderBy('i.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
 //    public function findOneBySomeField($value): ?Item
 //    {
@@ -45,4 +61,13 @@ class ItemRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+    public function findAll(): array
+   {
+       return $this->createQueryBuilder('p')
+                  ->getQuery()
+                  ->getResult()
+       ;
+   }
 }

@@ -13,12 +13,18 @@ label
     font-weight: bold;
 }
 
+#image
+{
+    display: block;
+    margin-bottom: -2px;
+}
+
 input,
 textarea,
 select 
 {
     width: 100%;
-    padding: 8px;
+    padding: 6px;
     margin-bottom: 16px;
     box-sizing: border-box;
     border: 1px solid #ccc;
@@ -33,16 +39,74 @@ textarea
 
 button 
 {
-    background-color: #007bff;
+    background-color: #67988e;
     color: #fff;
-    padding: 10px 20px;
+    padding: 6px 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
 }
 
+#siguiente, #anterior
+{
+    margin-top: 10px;
+}
+
 button:hover 
 {
-    background-color: #0056b3;
+    background-color: #95b7b0;
 }
+
+#parte2
+{
+    display: none;
+}
+
+#gallery 
+{ 
+    float: left; 
+    width: 65%; 
+    min-height: 12em; 
+}
+
+.gallery.custom-state-active 
+{ 
+    background: #eee; 
+}
+
+.gallery li 
+{ 
+    float: left; 
+    width: 96px; 
+    padding: 0.4em; 
+    margin: 0 0.4em 0.4em 0; 
+    text-align: center; 
+}
+
+.gallery li h5 
+{ 
+    margin: 0 0 0.4em; 
+    cursor: move; 
+}
+
+.gallery li a 
+{ 
+    float: right; 
+}
+
+.gallery li a.ui-icon-zoomin 
+{ 
+    float: left; 
+}
+
+.gallery li img 
+{ 
+    width: 100%; 
+    cursor: move; 
+}
+
+#itemSelec { float: right; width: 32%; min-height: 18em; padding: 1%; }
+#itemSelec h4 { line-height: 16px; margin: 0 0 0.4em; }
+#itemSelec h4 .ui-icon { float: left; }
+#itemSelec .gallery h5 { display: none; }

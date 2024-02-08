@@ -49,8 +49,8 @@ class UserCrudController extends AbstractCrudController
                 ),
             ArrayField::new("roles"),
             ImageField::new('url_foto')
-                ->setUploadDir("public/fotos")
-                ->setBasePath("fotos")
+                ->setUploadDir("public/images/fotosUser")
+                ->setBasePath("images/fotosUser")
                 ->setUploadedFileNamePattern('[contenthash].[extension]')
                 // ->addHtmlContentsToBody("<img src='/fotos/fotoPregunta1.jpg' class='img-fluid'>")
                 ->setFormTypeOption('attr', ['class' => 'wrapper'])

@@ -1,5 +1,4 @@
 <?php
-    // src/Service/EmailService.php
     namespace App\Service;
 
     use App\Service\MessageGenerator;

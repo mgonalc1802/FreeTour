@@ -19,126 +19,136 @@
     <link rel="stylesheet" href="css/jquery/richtext.min.css">
     <link rel = "stylesheet" href = "{{ asset('css/estilo/crearRuta.css') }}" type = "text/css">
 
-
-    <script>
-        $(function ()
-        {
-            var ruta = $("#ruta");
-
-            $(".content").append(ruta);
-        }) 
-    </script>
-
-    <style>
-        #gallery { float: left; width: 65%; min-height: 12em; }
-        .gallery.custom-state-active { background: #eee; }
-        .gallery li { float: left; width: 96px; padding: 0.4em; margin: 0 0.4em 0.4em 0; text-align: center; }
-        .gallery li h5 { margin: 0 0 0.4em; cursor: move; }
-        .gallery li a { float: right; }
-        .gallery li a.ui-icon-zoomin { float: left; }
-        .gallery li img { width: 100%; cursor: move; }
-        
-        #itemSelec { float: right; width: 32%; min-height: 18em; padding: 1%; }
-        #itemSelec h4 { line-height: 16px; margin: 0 0 0.4em; }
-        #itemSelec h4 .ui-icon { float: left; }
-        #itemSelec .gallery h5 { display: none; }
-    </style>
-
-    <section class = "content-header">
-        <div class = "content-header-title">
-            <h1 class = "title" >Rutas</h1>
-        </div>
-
-        <div class = "page-actions">    
-            <div class = "global-actions">
-                <a class = " action-new btn btn-primary" href="http://127.0.0.1:8000/admin?crudAction=new&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController" data-action-name = "new"><span class = "action-label">Añadir Ruta</span></a>
-            </div>
-            <div class = "batch-actions d-none">
-                    <a class = " action-batchDelete btn btn-danger pr-0" href="http://127.0.0.1:8000/admin?crudAction=batchDelete&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController" data-action-name = "batchDelete" data-bs-toggle="modal" data-bs-target="#modal-batch-action" data-action-csrf-token="1a8e822503a35173559.ksKLzxK3G7b7AQv7LRWTYGzErbdpsb81VH7hRnaZniw.yKXkq3joUuCDdkLKZWX0LFmrn_ta-vNcYxG1AwTp2EPThu64R_1WxoFVWg" data-action-batch="true" data-entity-fqcn="App\Entity\User" data-action-url="http://127.0.0.1:8000/admin?crudAction=batchDelete&amp;crudControllerFqcn=App%5CController%5CAdmin%5CUserCrudController"><span class = "action-label">Delete</span></a>
-            </div>
-        </div>
-    </section>    
-
     <form action = "/admin?routeName = rutas" method="post">
-                <!-- Título -->
-        <label for = "titulo">Título:</label>
-        <input type = "text" id = "titulo" name = "titulo" maxlength = "60" required>
 
-        <!-- Coordenada de Inicio -->
-        <label for = "coordenada_inicio">Punto de Inicio:</label>
-        <input type = "text" id = "indicaRuta" name = "indicaRuta" maxlength = "255" required autocompleted>
-        <button id = "buscarMapa">Buscar</button>
-        <div id = "map" style = "height: 400px;"></div>
-        <input type = "text" id = "coordenadaInicio" name = "coordenada_inicio" maxlength = "255" required disabled>
+        <div id = "parte1">
+            <div class = "row">
+                <h2>Atributos</h2>
+                <div class = "col-sm-5 mb-3">
+                    <!-- Título -->
+                    <label for = "titulo">Título:</label>
+                    <input type = "text" id = "titulo" name = "titulo" maxlength = "100" required>
+                </div>
+                
+                <div class = "col-sm-1 mb-3">
+                    <!-- Fechas -->
+                    <div id = "fecSali">
+                        <label for = "inicio">Fecha Inicio:</label>
+                        <input type = "text" name = "salida" id = "salida">
+                    </div>
+                </div>
+                
+                <div class = "col-sm-1 mb-3">
+                    <div id = "fecLleg">
+                        <label for = "Fin">Fecha Fin:</label>
+                        <input type = "text" name = "llegada" id = "llegada">
+                    </div>
+                </div>
 
-        <!-- Descripción -->
-        <label for = "descripcion">Descripción:</label>
-        <div class = "page-wrapper box-content">
-            <textarea class = "textArea" name = "example"></textarea>
-        </div>
+                <div class = "col-sm-1 mb-3">
+                    <!-- Aforo -->
+                    <label for = "aforo">Aforo:</label>
+                    <input type = "number" id = "aforo" name = "aforo" min = "1" max = "20" required>
+                </div>
 
-        <!-- Foto -->
-        <label for="image">Subir imagen</label>
-        <input type="file" class="form-control-file mt-2" name="image" id="image">
-
-        <!-- Aforo -->
-        <label for = "aforo">Aforo:</label>
-        <input type = "number" id = "aforo" name = "aforo" min = "1" max = "20" required>
-
-        <div id = "fecSali">
-            <label for = "inicio">Inicio:</label>
-            <input type = "text" name = "salida" id = "salida">
-        </div>
-        
-        <div id = "fecLleg">
-            <label for = "Fin">Fin:</label>
-            <input type = "text" name = "llegada" id = "llegada">
-        </div>
-
-        <div class="ui-widget ui-helper-clearfix">
-            <ul id = "gallery" class="gallery ui-helper-reset ui-helper-clearfix">
-                <li class="ui-widget-content ui-corner-tr">
-                    <h5 class="ui-widget-header">Prueba 1</h5>
-                    <img src="images/login.png" alt="The peaks of High Tatras" width="96" height="72">
-                    <a href="images/login.png" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
-                    <a href="link/to/itemSelec/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-itemSelec">Delete image</a>
-                </li>
-                <li class="ui-widget-content ui-corner-tr">
-                    <h5 class="ui-widget-header">High Tatras 2</h5>
-                    <img src="images/login.png" alt="The chalet at the Green mountain lake" width="96" height="72">
-                    <a href="images/login.png" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
-                    <a href="link/to/itemSelec/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-itemSelec">Delete image</a>
-                </li>
-                <li class="ui-widget-content ui-corner-tr">
-                    <h5 class="ui-widget-header">High Tatras 3</h5>
-                    <img src="images/login.png" alt="Planning the ascent" width="96" height="72">
-                    <a href="images/login.png" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
-                    <a href="link/to/itemSelec/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-itemSelec">Delete image</a>
-                </li>
-                <li class="ui-widget-content ui-corner-tr">
-                    <h5 class="ui-widget-header">High Tatras 4</h5>
-                    <img src="images/login.png" alt="On top of Kozi kopka" width="96" height="72">
-                    <a href="images/login.png" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
-                    <a href="link/to/itemSelec/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-itemSelec">Delete image</a>
-                </li>
-            </ul>
+                <div class = "col-sm-4 mb-3">
+                    <!-- Foto -->
+                    <label for="image" id = "image">Subir imagen</label>
+                    <input type="file" class="form-control-file mt-2" name="image" id="image">
+                </div>
+            </div>  
             
-            <div id = "itemSelec" class="ui-widget-content ui-state-default">
-                <h4 class="ui-widget-header"><span class="ui-icon ui-icon-itemSelec">itemSelec</span> itemSelec</h4>
+            <div class = "row">
+                <div class = "col-sm-4 mb-3">
+                    <!-- Coordenada de Inicio -->
+                    <label for = "coordenada_inicio">Punto de Inicio:</label>
+                    <input type = "text" id = "indicaRuta" name = "indicaRuta" maxlength = "255" required autocompleted>
+                </div>
+
+                <div class = "col-sm-3 mb-3">
+                    <label >Coordenadas:</label>
+                    <input type = "text" id = "coordenadaInicio" name = "coordenada_inicio" maxlength = "255" required disabled>
+                </div>
+
+                <div class = "col-sm-3 mb-3">
+                    <label style = "visibility: hidden;">Boton</label>
+                    <button id = "buscarMapa">Ver Mapa</button>
+                </div>
             </div>
-        
+
+            <div class = "row">
+                <!-- Descripción -->
+                <label for = "descripcion">Descripción:</label>
+                <div class = "page-wrapper box-content">
+                    <textarea id = "descripcion" class = "textArea" name = "example"></textarea>
+                </div>
+            </div>
+            
+            <div class = "row">
+                <div class = "col-sm-5 mb-3">
+                </div>
+                
+                <div class = "col-sm-2 mb-3">
+                    <button name = "siguiente" id = "siguiente">Siguiente</button>
+                </div>
+
+                <div class = "col-sm-5 mb-3">
+                </div>
+            </div>
         </div>
 
-        {# <select name = "items" id = "items" size = "5">
+        <div id = "parte2">
+            <h2>Items</h2>
+            <div class = "row">
+                <div class = "col-sm-2 mb-3">
+                    <label>Filtrar por: </label>
+                    <select name = "filtros" id = "filtros">
+                        <option value = "localidad">Por localidad</option>
+                        <option value = "provincia">Por provincia</option>
+                    </select>
+                </div>
 
-        </select>
+                <div class = "col-sm-3 mb-3">
+                    <label>Buscar: </label>
+                    <input type = "text" id = "filtra">
+                </div>
+                <div class = "col-sm-2 mb-3">
+                    <label style = "visibility:hidden;">Botón</label>
+                    <button id = "filtrar">Filtrar</button>
+                </div>
+                <div class = "col-sm-4 mb-3">
+                </div>
+            </div>       
+            <div class = "row">
+                <div class="ui-widget ui-helper-clearfix">
+                    <ul id = "gallery" class="gallery ui-helper-reset ui-helper-clearfix">
+                    </ul>
+                    
+                    <div id = "itemSelec" class="ui-widget-content ui-state-default">
+                        <h4 class="ui-widget-header"><span class="ui-icon ui-icon-itemSelec">itemSelec</span> Items Añadidos</h4>
+                    </div>
+                </div>
+            </div>
 
-        <select name = "itemSelec" id = "itemSelect" size = "5">
+            <div class = "row">
+                <div class = "col-sm-5 mb-3">
+                </div>
+                
+                <div class = "col-sm-2 mb-3">
+                    <!-- Botón de Retroceder -->
+                    <button id = "anterior" name = "anterior">Anterior</button>
+                </div>
 
-        </select> #}
+                <div class = "col-sm-5 mb-3">
+                </div>
+                
+            </div>
 
-        <!-- Botón de Enviar -->
-        <button id = "enviar" type = "submit">Enviar</button>
+            <div id = "map"></div>            
+            
+            
+
+        </div>
     </form>
 
 </div>

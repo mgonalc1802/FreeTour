@@ -132,4 +132,16 @@ class Item
 
         return $this;
     }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'titulo' => $this->getTitulo(),
+            'descripcion' => $this->getDescripcion(),
+            'foto' => $this->getFoto(),
+            'localidad_id' => $this->getLocalidad(),
+            'coordenadas' => $this->getCoordenadas()
+        ];
+    }
 }

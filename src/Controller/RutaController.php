@@ -5,9 +5,22 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use App\Repository\RutaRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Ruta;
 
 class RutaController extends AbstractController
 {
+    private $rutaRepository;
+
+    public function __constructor(RutaRepository $rutaRepository)
+    {
+        $this->rutaRepository = $rutaRepository;
+    }
+
     #[Route('/ruta', name: 'app_ruta')]
     public function index(): Response
     {
@@ -20,7 +33,7 @@ class RutaController extends AbstractController
     public function subirArchivos()
     {
         //Definiciones
-        $to_path = "images/items";
+        $to_path = "images/ruta";
 
         //Mover el archivo
         $nuevoArchivo = $to_path . "/" . $_FILES['file']['name'];
@@ -32,8 +45,47 @@ class RutaController extends AbstractController
         {
             return json_encode(["success" => false]);
         }
+    }
 
+    #[Route('/API/crearRuta', name: "crearRuta", methods: ['POST'])]
+    public function new(Request $request, EntityManagerInterface $manager): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
 
+        var_dump($data);
+
+        $titulo = $data['titulo'];
+        $fechaInicio = $data['fechaInicio'];
+        $fechaFin = $data['fechaFin'];
+        $aforo = $data['aforo'];
+        $descripcion = $data['descripcion'];
+        $urlFoto = $data['url_foto'];
+        // $items = $data['items'];
+        $coordenada = $data['coordenadas'];
+
+        if(empty($titulo) || empty($fechaInicio) || empty($fechaFin) || empty($aforo) || empty($descripcion) || empty($urlFoto) || empty($coordenada))
+        {
+            throw new NotFoundHttpException('No puede haber valores vacíos.');
+        }
+
+        //Crea el objeto ruta
+        $nuevaRuta = new Ruta();
+
+        //Le añade sus propiedades
+        $nuevaRuta
+            ->setTitulo($titulo)
+            ->setCoordenadaInicio($coordenada)
+            ->setDescripcion($descripcion)
+            ->setFechaComienzo(date_create($fechaInicio))
+            ->setFechaFin(date_create($fechaFin))
+            ->setUrlFoto($urlFoto)
+            ->setAforo($aforo)
+            ->setProgramacion("");
+
+        $manager->persist($nuevaRuta);
+        $manager->flush();
+
+        return new JsonResponse(['status' => 'Ruta Creada'], Response::HTTP_CREATED);
     }
     
 

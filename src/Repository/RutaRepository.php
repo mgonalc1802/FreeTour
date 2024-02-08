@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Ruta;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,6 +20,27 @@ class RutaRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Ruta::class);
+    }
+
+    public function crearRuta($titulo, $fechaInicio, $fechaFin, $aforo, $descripcion, $url_foto, $coordenada)
+    {
+        //Crea el objeto ruta
+        $nuevaRuta = new Ruta();
+
+        //Le añade propiedades
+        $nuevaRuta
+            ->setTitulo($titulo)
+            ->setCoordenadaInicio($coordenada)
+            ->setDescripcion($descripcion)
+            ->setUrlFoto($url_foto)
+            ->setAforo($aforo)
+            ->setProgramacion("");
+
+        //Indica que se realice la consulta
+        $this->manager->persist($nuevaRuta);
+
+        //Guarda la consulta
+        $this->manager->flush();
     }
 
 //    /**
