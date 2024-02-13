@@ -45,9 +45,13 @@ class Ruta
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $fechaFin = null;
 
+    #[ORM\OneToMany(mappedBy: 'ruta_id', targetEntity: Tour::class)]
+    private Collection $tours;
+
     public function __construct()
     {
         $this->item = new ArrayCollection();
+        $this->tours = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -171,6 +175,36 @@ class Ruta
     public function setFechaFin(\DateTimeInterface $fechaFin): static
     {
         $this->fechaFin = $fechaFin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tour>
+     */
+    public function getTours(): Collection
+    {
+        return $this->tours;
+    }
+
+    public function addTour(Tour $tour): static
+    {
+        if (!$this->tours->contains($tour)) {
+            $this->tours->add($tour);
+            $tour->setRutaId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTour(Tour $tour): static
+    {
+        if ($this->tours->removeElement($tour)) {
+            // set the owning side to null (unless already changed)
+            if ($tour->getRutaId() === $this) {
+                $tour->setRutaId(null);
+            }
+        }
 
         return $this;
     }

@@ -11,6 +11,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Repository\RutaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Ruta;
+use App\Repository\ItemRepository;
 
 class RutaController extends AbstractController
 {
@@ -48,20 +49,19 @@ class RutaController extends AbstractController
     }
 
     #[Route('/API/crearRuta', name: "crearRuta", methods: ['POST'])]
-    public function new(Request $request, EntityManagerInterface $manager): JsonResponse
+    public function new(Request $request, EntityManagerInterface $manager, ItemRepository $itemRepository): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-
-        var_dump($data);
-
+        
         $titulo = $data['titulo'];
         $fechaInicio = $data['fechaInicio'];
         $fechaFin = $data['fechaFin'];
         $aforo = $data['aforo'];
         $descripcion = $data['descripcion'];
         $urlFoto = $data['url_foto'];
-        // $items = $data['items'];
+        $items = $data['items'];
         $coordenada = $data['coordenadas'];
+        $programacion = $data['programacion'];
 
         if(empty($titulo) || empty($fechaInicio) || empty($fechaFin) || empty($aforo) || empty($descripcion) || empty($urlFoto) || empty($coordenada))
         {
@@ -73,20 +73,25 @@ class RutaController extends AbstractController
 
         //Le añade sus propiedades
         $nuevaRuta
-            ->setTitulo($titulo)
+            ->settitulo($titulo)
             ->setCoordenadaInicio($coordenada)
             ->setDescripcion($descripcion)
             ->setFechaComienzo(date_create($fechaInicio))
             ->setFechaFin(date_create($fechaFin))
             ->setUrlFoto($urlFoto)
             ->setAforo($aforo)
-            ->setProgramacion("");
+            ->setProgramacion($programacion);
+
+        //Bucle que introduce items
+        for ($i = 0; $i < count($items); $i++)
+        {
+            $item = $itemRepository->find($items[$i]);
+            $nuevaRuta -> addItem($item);
+        }
 
         $manager->persist($nuevaRuta);
         $manager->flush();
 
-        return new JsonResponse(['status' => 'Ruta Creada'], Response::HTTP_CREATED);
+        return new JsonResponse(['idRuta' => $nuevaRuta->getId()], Response::HTTP_CREATED);
     }
-    
-
 }

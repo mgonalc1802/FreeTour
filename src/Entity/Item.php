@@ -20,7 +20,7 @@ class Item
     #[ORM\Column(length: 60)]
     private ?string $titulo = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 1000)]
     private ?string $descripcion = null;
 
     #[ORM\Column(length: 255)]

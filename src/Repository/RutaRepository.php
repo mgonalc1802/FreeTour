@@ -43,6 +43,16 @@ class RutaRepository extends ServiceEntityRepository
         $this->manager->flush();
     }
 
+    public function findByTitulo($titulo): array
+    {
+        return $this->createQueryBuilder('r')
+                    ->andWhere('r.titulo = :val')
+                    ->setParameter('val', $titulo)
+                    ->getQuery()
+                    ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Ruta[] Returns an array of Ruta objects
 //     */

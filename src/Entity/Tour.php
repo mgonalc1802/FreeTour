@@ -34,6 +34,9 @@ class Tour
     #[ORM\Column(length: 255)]
     private ?string $guia = null;
 
+    #[ORM\ManyToOne(inversedBy: 'tours')]
+    private ?Ruta $ruta_id = null;
+
     public function __construct()
     {
         $this->reservas = new ArrayCollection();
@@ -118,6 +121,18 @@ class Tour
     public function setGuia(string $guia): static
     {
         $this->guia = $guia;
+
+        return $this;
+    }
+
+    public function getRutaId(): ?Ruta
+    {
+        return $this->ruta_id;
+    }
+
+    public function setRutaId(?Ruta $ruta_id): static
+    {
+        $this->ruta_id = $ruta_id;
 
         return $this;
     }

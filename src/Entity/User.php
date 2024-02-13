@@ -207,7 +207,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             'nombre' => $this->getNombre(),
             'apellido' => $this->getApellido(),
             'apellido2' => $this->getApellido2(),
-            'urlFoto' => $this->getUrlFoto()
+            'urlFoto' => $this->getUrlFoto(),
+            'roles' => $this->getRoles()
             // 'reservas' => $this->getReservas()->toArray(),
             // 'tours' => $this->getTours()->toArray(),
         ];

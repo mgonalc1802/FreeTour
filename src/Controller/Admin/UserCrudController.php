@@ -23,6 +23,15 @@ class UserCrudController extends AbstractCrudController
     {
 
     }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->add(Crud::PAGE_EDIT, Action::INDEX)
+            ->add(Crud::PAGE_EDIT, Action::DETAIL)
+            ;
+    }
+
     public static function getEntityFqcn(): string
     {
         return User::class;
@@ -37,6 +46,7 @@ class UserCrudController extends AbstractCrudController
             TextField::new('apellido'),
             TextField::new('apellido2'),
             TextField::new('password')
+                ->setRequired($pageName === Crud::PAGE_NEW)
                 ->onlyOnForms()
                 ->setFormType(RepeatedType::class)
                 ->setFormTypeOptions(

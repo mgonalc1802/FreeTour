@@ -19,6 +19,13 @@ label
     margin-bottom: -2px;
 }
 
+.errores
+{
+    visibility: hidden;
+    padding-top: 0px;
+    color: red;
+}
+
 input,
 textarea,
 select 
@@ -48,7 +55,7 @@ button
     font-size: 16px;
 }
 
-#siguiente, #anterior
+#siguiente, #anterior, #siguiente2, #anterior2
 {
     margin-top: 10px;
 }
@@ -58,7 +65,7 @@ button:hover
     background-color: #95b7b0;
 }
 
-#parte2
+#parte2, #parte3
 {
     display: none;
 }
@@ -106,7 +113,70 @@ button:hover
     cursor: move; 
 }
 
-#itemSelec { float: right; width: 32%; min-height: 18em; padding: 1%; }
-#itemSelec h4 { line-height: 16px; margin: 0 0 0.4em; }
-#itemSelec h4 .ui-icon { float: left; }
-#itemSelec .gallery h5 { display: none; }
+#itemSelec 
+{ 
+    float: right; 
+    width: 32%; 
+    min-height: 18em; 
+    padding: 1%; 
+}
+
+#itemSelec h4 
+{ 
+    line-height: 16px; 
+    margin: 0 0 0.4em; 
+}
+
+#itemSelec h4 .ui-icon 
+{ 
+    float: left; 
+}
+
+#itemSelec .gallery h5 
+{ 
+    display: none; 
+}
+
+table 
+{
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+  
+thead 
+{
+    background-color: #f2f2f2;
+}
+
+th 
+{
+    padding: 10px;
+    text-align: left;
+}
+
+td 
+{
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+#seleccionables, #labelSelec
+{
+    display: flex;
+}
+
+#seleccionables input
+{
+    margin-right: 5px;
+}
+
+/* #labelSelec label
+{
+    margin-left: 50px;
+} */
+
+#guias
+{
+    width: 150px;
+}

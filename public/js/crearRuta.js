@@ -14,13 +14,17 @@ $(function()
     $(".page-actions").append(crearSalir);
     $(".page-actions").append(crearOther);
 
+    //Oculta los botones
+    $(".page-actions").css("visibility", "hidden");
+
     //Obtiene el div
     var ruta = $("#ruta");
 
     //Lo introduce en el contenedor de easyadmin
     $(".content").append(ruta);
 
-
+    //Inserta datos en el select
+    traeGuias();
 
     
     //-----------VARIABLES-----------------
@@ -54,6 +58,12 @@ $(function()
     //Obtiene el botón que permite retroceder de página
     var anterior = $("#anterior");
 
+    //Obtiene el botón que permite cambiar de página 2
+    var siguiente2 = $("#siguiente2");
+
+    //Obtiene el botón que permite retroceder de página 2
+    var anterior2 = $("#anterior2");
+
     siguiente.click(function (ev)
     {
         //Previene el submit que realiza por defecto
@@ -64,6 +74,9 @@ $(function()
 
         //Hace visible la segunda parte
         $("#parte2").css("display", "block");
+
+        //Hace invisible la segunda parte
+        $("#parte3").css("display", "none");
     });
 
     anterior.click(function (ev)
@@ -76,28 +89,69 @@ $(function()
 
         //Hace invisible la segunda parte
         $("#parte2").css("display", "none");
+
+        //Hace invisible la segunda parte
+        $("#parte3").css("display", "none");
     });
 
+    siguiente2.click(function (ev)
+    {
+        //Previene el submit que realiza por defecto
+        ev.preventDefault();
+
+        //Hace invisible la primera parte
+        $("#parte1").css("display", "none");
+
+        //Hace invisible la segunda parte
+        $("#parte2").css("display", "none");
+
+        //Hace visible la tercera parte
+        $("#parte3").css("display", "block");
+
+        //Hace visible los botones de crear 
+        $(".page-actions").css("visibility", "visible");
+
+    });
+
+    anterior2.click(function (ev)
+    {
+        //Previene el submit que realiza por defecto
+        ev.preventDefault();
+
+        //Hace invisible la primera parte
+        $("#parte1").css("display", "none");
+
+        //Hace visible la segunda parte
+        $("#parte2").css("display", "block");
+
+        //Hace invisible la segunda parte
+        $("#parte3").css("display", "none");
+
+        //Hace invisible los botones de crear 
+        $(".page-actions").css("visibility", "hidden");
+    });
+
+    //Indica que el mapa es un modal
     $( "#map" ).dialog(
     {
-        autoOpen: false,
-        modal: true,
-        show: 
+        autoOpen: false, //No se autoabre
+        modal: true, //Es un modal
+        show: //Efectos al abrir
             {
                 effect: "blind",
                 duration: 1000
             },
-        hide: 
-            {
+        hide: //Efectos al cerrar
+            { 
                 effect: "explode",
                 duration: 1000
             },
-        width: 1000, 
-        height: 600 
+        width: 1000, //Altura
+        height: 600 //Ancho
     });
 
     //Si escribimos la ruta en el input, devuelve las coordenadas sin ver el mapa
-    $("#indicaRuta").on("change", function()
+    $("#indicaRuta").on("keyup", function()
     {
         //Llama al método para devolver las coordenadas.
         devuelveCoordenadas($("#indicaRuta").val())
@@ -177,41 +231,137 @@ $(function()
         var foto = subirFoto();
         var coordenadas = $("#coordenadaInicio").val();
         var descripcion = $("#descripcion").val();
+        const dias = $("input[type='checkbox']:checked");
+        var hora = $("#horaTour").val();
+        var guia = $("#guias").val();
 
-        //Genera el json
-        var json = 
+        //Si el formulario está correcto
+        if(validarFormulario(titulo, coordenadas, descripcion))
         {
-            "titulo": titulo,
-            "fechaInicio": fechaComienzo,
-            "fechaFin": fechaFin,
-            "aforo": aforo,
-            "descripcion": descripcion,
-            "url_foto": foto,
-            "coordenadas": coordenadas
-        };
+            //Obtiene la lista de elementos dentro del div
+            var itemsSelec = $('#itemSelec li');
 
-        //Llama al método insertarRuta
-        insertarRuta(json);
+            //Indica el tamanio del array itemsSelec
+            var longitud = itemsSelec.length;
 
-        //Obtiene la lista de elementos dentro del div
-        var itemsSelec = $('#itemSelec li');
+            //Obtener fechas 
+            const diasSelec = traerDias(fechaComienzo, fechaFin, dias);
 
-        //Indica el tamanio del array itemsSelec
-        var longitud = itemsSelec.length;
+            //Array para guardar los id de los Items guardados
+            const idItems = [];
 
-        //Array para guardar los id de los Items guardados
-        const idItems = [];
+            //Bucle que guarda los id de los item
+            for(let i = 0; i < longitud; i++)
+            {
+                idItems[i] = itemsSelec[i].dataset.id;
+            }
 
-        //Bucle que guarda los id de los item
-        for(let i = 0; i < longitud; i++)
-        {
-            idItems[i] = itemsSelec[i].dataset.id;
+            //Genera el json de programación y tour
+            var programacion =  "{ 'hora': " + hora + ", fecha': " + diasSelec + ", 'guia': " + guia + "}";
+
+            //Genera el json
+            var json = 
+            {
+                "titulo": titulo,
+                "fechaInicio": fechaComienzo,
+                "fechaFin": fechaFin,
+                "aforo": aforo,
+                "descripcion": descripcion,
+                "url_foto": foto,
+                "items": idItems,
+                "coordenadas": coordenadas,
+                "programacion": programacion
+            };
+
+            
+            //Llama al método insertarRuta
+            insertarRuta(json, hora, guia, diasSelec);
+            
         }
-
     })
 })
 
-function insertarRuta(json) 
+function traerDias(fechaComienzo, fechaFin, dias) 
+{
+    //Convertimos en fechas
+    var fechaInicio = new Date(fechaComienzo);
+    var fechaFinal = new Date(fechaFin);
+
+    //Crea la variable tipo array que devolveremos
+    const diasSeleccionados = [];
+
+    //Calcula los milisegundos de un día
+    const milisegundosDia = 1000 * 60 * 60 * 24;
+
+    //Intervalo por días
+    const intervalo = milisegundosDia * 1; 
+
+    //Bucle que recorre las fechas entre la inicial y la final
+    for (let i = fechaInicio; i <= fechaFinal; i = new Date(i.getTime() + intervalo)) 
+    {
+        //Bucle que recorre el array de dias marcados
+        for(let j = 0; j < dias.length; j++)
+        {
+            //Si la fecha 
+            if(i.getDay() == dias[j].value)
+            {
+                //Guarda en el array las fechas
+                diasSeleccionados[j] = i.getFullYear() + "-" + i.getMonth() + "-" + i.getDate();
+            }
+        }
+    }
+
+    //Devuelve el array con las fechas de los días marcados
+    return diasSeleccionados;
+}
+
+function insertaTour(json)
+{
+    //Llamada AJAX que se encarga de insertar Ruta
+    $.ajax(
+        {
+            url: "/API/crearTour",
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(json), 
+            contentType: 'application/json', 
+            processData: false,
+            success: function (response) 
+            {
+                console.log("TOUR");
+            }
+        });
+}
+
+function traeGuias()
+{
+    //Llamada AJAX que se encarga de insertar Ruta
+    $.ajax(
+    {
+        url: "/API/guias",
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json', 
+        processData: false,
+        success: function (response) 
+        {
+            //Obtiene el contenido html necesario
+            var selectGuias = $("#guias");
+
+            //Recorre el array que obtiene a través de la API
+            for(let i = 0; i < response.length; i++)
+            {
+                //Crea un nuevo elemento del select
+                var option = $('<option value = "' + response[i].nombre + ' ' + response[i].apellido + '">' + response[i].nombre + ' ' + response[i].apellido +'</option>');
+
+                //Añade al select la opción
+                selectGuias.append(option);
+            }       
+        }
+    });
+}
+
+function insertarRuta(json, hora, guia, diasSelec) 
 {
     //Llamada AJAX que se encarga de insertar Ruta
     $.ajax(
@@ -224,7 +374,20 @@ function insertarRuta(json)
         processData: false,
         success: function (response) 
         {
-            console.log(response);
+            for(let i = 0; i < diasSelec.length; i++)
+            {
+                //Genera el json de programación y tour
+                var jsonTour =  
+                { 
+                    "hora": hora, 
+                    "fecha": diasSelec[i], 
+                    "guia": guia, 
+                    "idRuta": response["idRuta"] 
+                };
+
+                //Llama al método insertar Tour
+                insertaTour(jsonTour);
+            }
         }
     });
 }
@@ -235,7 +398,8 @@ function soltarItems(trash, gallery)
     trash.droppable(
     {
         accept: "#gallery > li",
-        classes: {
+        classes: 
+        {
             "ui-droppable-active": "ui-state-highlight"
         },
         drop: function( event, ui ) 
@@ -248,10 +412,12 @@ function soltarItems(trash, gallery)
     gallery.droppable(
     {
         accept: "#trash li",
-        classes: {
+        classes: 
+        {
             "ui-droppable-active": "custom-state-active"
         },
-        drop: function( event, ui ) {
+        drop: function( event, ui ) 
+        {
             recycleImage( ui.draggable );
         }
     });
@@ -283,16 +449,16 @@ function soltarItems(trash, gallery)
         $item.fadeOut(function() 
         {
             $item
-            .find( "a.ui-icon-refresh" )
-            .remove()
-            .end()
-            .css( "width", "96px")
-            .append( trash_icon )
-            .find( "img" )
-            .css( "height", "72px" )
-            .end()
-            .appendTo( gallery )
-            .fadeIn();
+                .find( "a.ui-icon-refresh" )
+                .remove()
+                .end()
+                .css( "width", "96px")
+                .append( trash_icon )
+                .find( "img" )
+                .css( "height", "72px" )
+                .end()
+                .appendTo( gallery )
+                .fadeIn();
         });
     }
 
@@ -414,12 +580,56 @@ function devuelveCoordenadas(direccion)
                 //Hacer algo con las coordenadas (puedes mostrarlas en la consola o en un elemento HTML)
                 $("#coordenadaInicio").val(latitud + ", " + longitud);
             } 
-        },
-        error: function () 
-        {
-            alert("Error al obtener las coordenadas. Por favor, inténtalo de nuevo.");
         }
     });
+}
+
+function validarFormulario(titulo, indicaRuta, descripcion)
+{
+    //Crea un booleano al que asignamos true por defecto
+    var validar = true;
+
+    //Hace invisible los errores si ya existían
+    quitarErrores();
+
+    //Si título es vacío
+    if(titulo == "")
+    {
+        //Muestra el error
+        $("#errTit").css("visibility", "visible");
+
+        //Cambia el booleano
+        validar = false;
+    }
+
+    //Si las coordenadas está vacío
+    if(indicaRuta == "")
+    {
+        //Muestra el error
+        $("#errDir").css("visibility", "visible");
+
+        //Cambia el booleano
+        validar = false;
+    }
+
+    //Si descripción está vacío
+    if(descripcion == "<div><br></div>")
+    {
+        //Muestra el error
+        $("#errDes").css("visibility", "visible");
+
+        //Cambia el booleano
+        validar = false;
+    }
+
+    //Devuelve el booleano
+    return validar;
+}
+
+function quitarErrores()
+{
+    //Esconde todos los errores
+    $("#errores").css("visibility", "hidden");
 }
 
 
@@ -528,7 +738,7 @@ function subirFoto()
     var formData = new FormData();
 
     //Obtiene la imagen
-    var files = $('#image')[0].files[0];
+    var files = $('#imagen')[0].files[0];
     
     //Añade la imagen al formData
     formData.append('file', files);
@@ -540,7 +750,6 @@ function subirFoto()
         type: 'post',
         data: formData,
         dataType: "json",
-        contentType: false,
         processData: false,
         success: function(response) 
         {
