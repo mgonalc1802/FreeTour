@@ -28,6 +28,11 @@ class ItemCrudController extends AbstractCrudController
                 ->setFormTypeOption('attr', ['class' => 'wrapper']),
             AssociationField::new("localidad"),
             TextField::new('coordenadas')
+                ->addJsFiles('js/jquery-3.7.1.js')
+                ->addJsFiles('js/jquery-ui.js')
+                ->addJsFiles("https://unpkg.com/leaflet/dist/leaflet.js")
+                ->addJsFiles('js/crearItem.js')
+                ->addCssFiles('https://unpkg.com/leaflet/dist/leaflet.css')
         ];
     }
     

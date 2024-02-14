@@ -59,10 +59,10 @@ class UserCrudController extends AbstractCrudController
                 ),
             ArrayField::new("roles"),
             ImageField::new('url_foto')
+                ->setRequired($pageName === Crud::PAGE_NEW)
                 ->setUploadDir("public/images/fotosUser")
                 ->setBasePath("images/fotosUser")
                 ->setUploadedFileNamePattern('[contenthash].[extension]')
-                // ->addHtmlContentsToBody("<img src='/fotos/fotoPregunta1.jpg' class='img-fluid'>")
                 ->setFormTypeOption('attr', ['class' => 'wrapper'])
         ];
     }

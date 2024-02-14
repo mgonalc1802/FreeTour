@@ -187,6 +187,9 @@ $(function()
         ev.preventDefault();
 
         //Se encarga de vaciar los items
+        $("#gallery li").remove();
+
+        //Se encarga de vaciar los items seleccionados
         $("#itemSelec ul").remove();
 
         //Condición dependiendo del valueFil
@@ -273,10 +276,8 @@ $(function()
                 "programacion": programacion
             };
 
-            
             //Llama al método insertarRuta
             insertarRuta(json, hora, guia, diasSelec);
-            
         }
     })
 })
@@ -328,7 +329,7 @@ function insertaTour(json)
             processData: false,
             success: function (response) 
             {
-                console.log("TOUR");
+                console.log(response);
             }
         });
 }
