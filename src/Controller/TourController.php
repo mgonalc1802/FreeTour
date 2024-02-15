@@ -13,6 +13,7 @@ use App\Entity\Tour;
 use App\Entity\Ruta;
 use App\Entity\Informe;
 use App\Repository\RutaRepository;
+use App\Repository\TourRepository;
 
 class TourController extends AbstractController
 {
@@ -35,15 +36,19 @@ class TourController extends AbstractController
     #[Route('/API/crearTour', name: "crearTour", methods: ['POST'])]
     public function new(Request $request, EntityManagerInterface $manager, RutaRepository $rutaRepository): JsonResponse
     {
+        //Guarda los datos json que vienen
         $data = json_decode($request->getContent(), true);
 
-        $fecha = $data['fecha'];
-        $hora = $data['hora'];
-        $guia = $data['guia'];
-        $idRuta = $data['idRuta'];
+        //Obtiene cada atributo incluido del json
+        $fecha = $data['fecha']; //Fecha
+        $hora = $data['hora']; //Hora
+        $guia = $data['guia']; //Guia
+        $idRuta = $data['idRuta']; //IdRuta
 
+        //Comprueba que no están vacíos
         if(empty($fecha) || empty($hora) || empty($guia))
         {
+            //Devuelve una excepción
             throw new NotFoundHttpException('No puede haber valores vacíos.');
         }
 
@@ -60,9 +65,34 @@ class TourController extends AbstractController
             ->setGuia($guia)
             ->setRutaId($ruta);
 
+        //Genera el persist
         $manager->persist($nuevoTour);
-        $manager->flush();
 
+        //Lo inserta en la bdd
+        $manager->flush(); 
+
+        //Devuelve la id del archivo recién creado
         return new JsonResponse(['idTour' => $nuevoTour->getId()], Response::HTTP_CREATED);
     }
+
+    #[Route('/API/getTours', name: "getTours", methods: ['GET'])]
+    public function getTour(TourRepository $tourRepository, RutaRepository $rutaRepository): JsonResponse
+    {
+        //Trae todos los tours
+        $tours = $tourRepository->findAll();
+
+        //Crea un array
+        $toursArray = [];
+
+        //Reccorre los tours
+        foreach ($tours as $tour) 
+        {
+            //Añade al array cada tour serializado
+            $toursArray[] = $tour->jsonSerialize();
+        }
+
+        //Devuelve el array con tours
+        return new JsonResponse($toursArray);
+    }
+
 }

@@ -27,8 +27,9 @@ $(function()
         editable: true,
         weekNumbers: true,
         dayMaxEvents: true,
-        events: "/json/calendar.json"
+        events: "/API/getTours"
     });
 
     calendar.render();
+
 });

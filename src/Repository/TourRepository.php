@@ -21,6 +21,14 @@ class TourRepository extends ServiceEntityRepository
         parent::__construct($registry, Tour::class);
     }
 
+    public function findAll(): array
+    {
+        return $this->createQueryBuilder('t')
+                    ->getQuery()
+                    ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Tour[] Returns an array of Tour objects
 //     */

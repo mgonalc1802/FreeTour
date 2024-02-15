@@ -16,13 +16,13 @@ use App\Repository\UserRepository;
 
 class UsuarioController extends AbstractController
 {
-    #[Route('/API/usuario/{id}',  methods: ["GET"])]
+    #[Route('/API/usuario/{id}', name: "usuario", methods: ["GET"])]
     public function getUsuario(User $usuario): Response
     {        
         return new JsonResponse($usuario->jsonSerialize());
     }
 
-    #[Route('/API/usuarios', methods: ["GET"])]
+    #[Route('/API/usuarios', name: "usuarios", methods: ["GET"])]
     public function getUsuarios(UserRepository $userRepository): JsonResponse
     {
         $usuarios = $userRepository->findAll();

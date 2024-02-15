@@ -3,16 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\{User, Item, Provincia, Localidad};
-use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
-use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use EasyCorp\Bundle\EasyAdminBundle\Config\{Dashboard, Action, Actions, Crud, Assets, MenuItem};
+use EasyCorp\Bundle\EasyAdminBundle\Controller\{AbstractDashboardController, AbstractCrudController};
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -43,12 +37,9 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Usuarios', 'fa fa-users', User::class);
         yield MenuItem::linkToRoute('Rutas', 'fa fa-map-o', "rutas");
         yield MenuItem::linkToCrud('Items', 'fa fa-inbox', Item::class);
-        yield MenuItem::section('Lugares');
+        yield MenuItem::section('Localización');
         yield MenuItem::linkToCrud('Provincia', 'fa fa-map-marker', Provincia::class);
         yield MenuItem::linkToCrud('Localidad', 'fa fa-map-pin', Localidad::class);
-
-
-
     }
 
     public function configureActions(): Actions

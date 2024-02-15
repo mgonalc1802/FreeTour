@@ -1,20 +1,72 @@
 [
     {
-        "title": "Nombre ruta",
-        "start": "2024-02-16 10:00:00",
-        "end": "2024-02-16 16:00:00",
-        "description": "Aforo relleno/ Máximo"
+        "title": "Ruta A",
+        "start": "2024-02-14",
+        "hora": "10:00",
+        "color": "red",
+        "description": 50
     },
     {
-        "title": "Nombre Ruta 2",
-        "start": "2024-02-18 10:00:00",
-        "end": "2024-02-18 18:00:00",
-        "description": "Aforo relleno/ Máximo"
+        "title": "Ruta B",
+        "start": "2024-02-15",
+        "hora": "11:30",
+        "color": "red",
+        "description": 30
     },
     {
-        "title": "Nombre Ruta 3",
-        "start": "2024-02-20 10:00:00",
-        "end": "2024-02-20 18:00:00",
-        "description": "Aforo relleno/ Máximo"
+        "title": "Ruta C",
+        "start": "2024-02-16",
+        "hora": "2:00",
+        "color": "red",
+        "description": 40
+    },
+    {
+        "title": "Ruta D",
+        "start": "2024-02-17",
+        "hora": "3:45",
+        "color": "yellow",
+        "description": 25
+    },
+    {
+        "title": "Ruta E",
+        "start": "2024-02-18",
+        "hora": "9:30",
+        "color": "black",
+        "description": 60
+    },
+    {
+        "title": "Ruta F",
+        "start": "2024-02-19",
+        "hora": "1:15",
+        "color": "purple",
+        "description": 35
+    },
+    {
+        "title": "Ruta G",
+        "start": "2024-02-20",
+        "hora": "4:30",
+        "color": "red",
+        "description": 45   
+    },
+    {
+        "title": "Ruta H",
+        "start": "2024-02-21",
+        "hora": "12:00",
+        "color": "green",
+        "description": 55
+    },
+    {
+        "title": "Ruta I",
+        "start": "2024-02-22",
+        "hora": "2:45",
+        "color": "red",
+        "description": 50
+    },
+    {
+        "title": "Ruta J",
+        "start": "2024-02-23",
+        "hora": "8:00",
+        "color": "blue",
+        "description": 40
     }
 ]
