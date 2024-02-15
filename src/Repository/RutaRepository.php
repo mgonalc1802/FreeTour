@@ -53,6 +53,14 @@ class RutaRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findAll(): array
+    {
+        return $this->createQueryBuilder('r')
+                    ->getQuery()
+                    ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Ruta[] Returns an array of Ruta objects
 //     */

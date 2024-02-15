@@ -1,0 +1,152 @@
+.contenedor 
+{
+    position: relative;
+    height: 400px;
+    border-radius: 15px;
+    width: 800px;
+    margin-left: 4em;
+}
+
+.imagen 
+{
+    position: absolute;
+    width: 650px;
+    height: 400px;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.imagen img
+{
+    height: 100%;
+    position: relative;
+    left: 45%;
+    transform: translateX(-52%);
+}
+
+.texto 
+{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 85%;
+    color: white;
+    font-weight: bold;
+}
+
+.contenedor a
+{
+    position: absolute;
+    text-decoration: none;
+    color: white;
+    font-size: 36px;
+    top : 50%;
+    right: 90%;
+    transform: translateY(-50%);
+}
+
+.siguiente 
+{
+    left: 96%;
+}
+
+.puntos 
+{
+    position: absolute;
+    top: 93%;
+    width: 100%;
+    margin-left: 20px;
+    text-align: center;
+}
+
+.punto 
+{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-color: white;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.punto:hover 
+{
+    cursor: pointer;
+    background-color: gray;
+}
+
+.contenedor a:hover 
+{
+    color: gray;
+}
+
+.actual 
+{
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 1s, opacity 1s;
+}
+
+.activo 
+{
+    background-color: gray;
+}
+
+.tituloReserva
+{
+    font-weight: bolder;
+    color: #f5f5f5;
+    margin-top: 1em;
+    margin-left: 2em;
+}
+
+#containerReserva
+{
+    width: 100%;
+    min-height: 100vh;
+}
+
+table 
+{
+    width: 100%;
+    margin-top: 0.5em;
+    border-collapse: collapse;
+}
+  
+thead 
+{
+    background-color: #f2f2f2;
+}
+
+th 
+{
+    padding: 10px;
+    text-align: left;
+}
+
+td 
+{
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.informacion
+{
+    margin-left: 3em;
+}
+
+#coordenada, #idUsuario
+{
+    visibility: hidden;
+}
+
+#mapa 
+{
+    height: 400px; 
+    width: 100%;
+}
+
+#reserva_numero_reservas
+{
+    width: 70px;
+}

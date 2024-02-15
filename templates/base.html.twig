@@ -25,22 +25,19 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                         </li>
                     {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('admin') }}">Admin</a>
                         </li>
                     {% endif %}
+                    {% if  is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') or is_granted('ROLE_GUIA') %}
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Features</a>
+                            <a class="nav-link" href="#">Mis Reservas</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Pricing</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </li>
+                    {% endif %}
+
                     </ul>
 
                     <ul class = "navbar-nav ml-auto">

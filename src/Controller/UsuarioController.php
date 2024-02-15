@@ -39,12 +39,16 @@ class UsuarioController extends AbstractController
     #[Route('/API/guias', methods: ["GET"])]
     public function getGuias(UserRepository $userRepository): JsonResponse
     {
-        $usuarios = $userRepository->findByGuia();
+        $usuarios = $userRepository->findAll();
 
         $usuariosArray = [];
-        foreach ($usuarios as $usuario) 
+        
+        foreach($usuarios as $usuario)
         {
-            $usuariosArray[] = $usuario->jsonSerialize();
+            if (in_array("ROLE_GUIA", $usuario->getRoles())) 
+            {
+                $usuariosArray[] = $usuario->jsonSerialize();
+            }
         }
 
         return new JsonResponse($usuariosArray);

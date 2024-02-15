@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="css/jquery/richtext.min.css">
     <link rel = "stylesheet" href = "{{ asset('css/estilo/crearRuta.css') }}" type = "text/css">
 
-    <form action = "/admin?routeName = rutas" method="post">
+    <form action = "/admin?routeName = rutas" method="post" enctype="multipart/form-data">
 
         <div id = "parte1">
             <div class = "row">
@@ -56,7 +56,7 @@
                 <div class = "col-sm-4 mb-3">
                     <!-- Foto -->
                     <label for="image" id = "image">Subir imagen</label>
-                    <input type="file" class="form-control-file mt-2" name="image" id="imagen">
+                    <input type="file" class="form-control-file mt-2" name="file" id="imagen">
                     <label class = "errores" id = "errImg">Inserta una imágen</label>
                 </div>
             </div>  

@@ -131,25 +131,6 @@ $(function()
         $(".page-actions").css("visibility", "hidden");
     });
 
-    //Indica que el mapa es un modal
-    $( "#map" ).dialog(
-    {
-        autoOpen: false, //No se autoabre
-        modal: true, //Es un modal
-        show: //Efectos al abrir
-            {
-                effect: "blind",
-                duration: 1000
-            },
-        hide: //Efectos al cerrar
-            { 
-                effect: "explode",
-                duration: 1000
-            },
-        width: 1000, //Altura
-        height: 600 //Ancho
-    });
-
     //Si escribimos la ruta en el input, devuelve las coordenadas sin ver el mapa
     $("#indicaRuta").on("keyup", function()
     {
@@ -295,21 +276,27 @@ function traerDias(fechaComienzo, fechaFin, dias)
     const milisegundosDia = 1000 * 60 * 60 * 24;
 
     //Intervalo por días
-    const intervalo = milisegundosDia * 1; 
+    const intervalo = milisegundosDia * 1;
 
     //Bucle que recorre las fechas entre la inicial y la final
     for (let i = fechaInicio; i <= fechaFinal; i = new Date(i.getTime() + intervalo)) 
     {
-        //Bucle que recorre el array de dias marcados
-        for(let j = 0; j < dias.length; j++)
+        //Bucle que recorre el array de días marcados
+        for (let j = 0; j < dias.length; j++) 
         {
-            //Si la fecha 
-            if(i.getDay() == dias[j].value)
+            //Si la fecha
+            if (i.getDay() == dias[j].value) 
             {
+                //Crea un nuevo array si aún no existe
+                if (!diasSeleccionados[j]) 
+                {
+                    diasSeleccionados[j] = [];
+                }
                 //Guarda en el array las fechas
-                diasSeleccionados[j] = i.getFullYear() + "-" + i.getMonth() + "-" + i.getDate();
+                diasSeleccionados[j].push(i.getFullYear() + "-" + (i.getMonth() + 1) + "-" + i.getDate());
             }
         }
+        
     }
 
     //Devuelve el array con las fechas de los días marcados
@@ -330,6 +317,12 @@ function insertaTour(json)
             success: function (response) 
             {
                 console.log(response);
+                window.location.href = "/admin";
+            },
+            error: function (xhr, status, error)
+            {
+                console.error("Error en la solicitud AJAX:", status, error);
+                console.log(xhr.responseText);  // Puedes imprimir el cuerpo de la respuesta para obtener más detalles
             }
         });
 }
@@ -375,19 +368,25 @@ function insertarRuta(json, hora, guia, diasSelec)
         processData: false,
         success: function (response) 
         {
+            console.log(diasSelec)
             for(let i = 0; i < diasSelec.length; i++)
             {
-                //Genera el json de programación y tour
-                var jsonTour =  
-                { 
-                    "hora": hora, 
-                    "fecha": diasSelec[i], 
-                    "guia": guia, 
-                    "idRuta": response["idRuta"] 
-                };
-
-                //Llama al método insertar Tour
-                insertaTour(jsonTour);
+                for(let j = 0; j < diasSelec[i].length; j++)
+                {
+                    console.log("aaaaa")
+                    console.log(diasSelec[i][j])
+                    //Genera el json de programación y tour
+                    var jsonTour =  
+                    { 
+                        "hora": hora, 
+                        "fecha": diasSelec[i][j], 
+                        "guia": guia, 
+                        "idRuta": response["idRuta"] 
+                    };
+                    //Llama al método insertar Tour
+                    insertaTour(jsonTour);
+                }
+                
             }
         }
     });
@@ -735,31 +734,34 @@ function generaMapa()
 
 function subirFoto()
 {
-    //Crea el formFata        
     var formData = new FormData();
+    var files = $('#imagen')[0].files;
 
-    //Obtiene la imagen
-    var files = $('#imagen')[0].files[0];
-    
-    //Añade la imagen al formData
-    formData.append('file', files);
-    
-    //Llamada AJAX
-    $.ajax(
+    if (files.length > 0) 
     {
-        url: 'API/subirArchivos',
-        type: 'post',
-        data: formData,
-        dataType: "json",
-        processData: false,
-        success: function(response) 
+        formData.append('file', files[0]);
+
+        $.ajax(
         {
-            console.log(response);
-        }
-    });
+            url: 'API/subirArchivos',
+            type: 'post',
+            data: formData,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function(response) 
+            {
+                console.log(response);
+            }
+        });
+    } 
+    else 
+    {
+        console.log("No se ha seleccionado ningún archivo.");
+    }
 
     //Devuelve el nombre del archivo
-    return files.name;
+    return files[0].name;
 }
 
 

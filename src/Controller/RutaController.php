@@ -31,21 +31,32 @@ class RutaController extends AbstractController
     }
 
     #[Route('/API/subirArchivos', name: "subirArchivos", methods: ['POST'])]
-    public function subirArchivos()
+    public function subirArchivos(Request $request): JsonResponse
     {
-        //Definiciones
+        // Definiciones
         $to_path = "images/ruta";
 
-        //Mover el archivo
-        $nuevoArchivo = $to_path . "/" . $_FILES['file']['name'];
-        if (move_uploaded_file($_FILES["file"]["tmp_name"], $nuevoArchivo)) 
+        // Mover el archivo
+        $archivo = $request->files->get('file');
+
+        if ($archivo) 
         {
-            return json_encode(["success" => true]);
-        }
-        else
+            $nuevoArchivo = $to_path . "/" . $archivo->getClientOriginalName();
+
+            if ($archivo->move($to_path, $archivo->getClientOriginalName())) 
+            {
+                return new JsonResponse(["success" => true]);
+            } 
+            else 
+            {
+                return new JsonResponse(["success" => false]);
+            }
+        } 
+        else 
         {
-            return json_encode(["success" => false]);
+            return new JsonResponse(["success" => false, "error" => "No se ha proporcionado ningún archivo."]);
         }
+        
     }
 
     #[Route('/API/crearRuta', name: "crearRuta", methods: ['POST'])]

@@ -137,6 +137,12 @@ class Tour
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->fecha->format('Y-m-d');
+    }
+
+
     public function jsonSerialize(): array
     {
         return [
