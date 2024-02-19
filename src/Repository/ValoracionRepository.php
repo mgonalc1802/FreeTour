@@ -36,6 +36,16 @@ class ValoracionRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+    public function findById($value): array
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    public function findOneBySomeField($value): ?Valoracion
 //    {
 //        return $this->createQueryBuilder('v')

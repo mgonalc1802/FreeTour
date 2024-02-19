@@ -139,7 +139,7 @@ class Tour
 
     public function __toString()
     {
-        return $this->fecha->format('Y-m-d');
+        return $this->fecha->format('Y-m-d') . ' ';
     }
 
 

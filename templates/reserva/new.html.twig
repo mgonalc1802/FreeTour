@@ -73,12 +73,21 @@
                 <div class = "row">
                     <div class = "col-sm-2 mb-3">
                         <label>Nº Personas: </label>
-                        {# <input type = "number" value = "1" min = "1" max = "5"> #}
                     </div>
-                    <div class = "col-sm-3 mb-3">
+
+                    <div class = "col-sm-2 mb-3">
                         {{ form_widget(form.numero_reservas, {'attr': {'class': 'form-control'}}) }}
                     </div>
-                    <div class = "col-sm-5 mb-3">
+
+                    <div class = "col-sm-2 mb-3">
+                        <label>Seleccionar fecha: </label>
+                    </div>
+
+                    <div class = "col-sm-3 mb-3">
+                        {{ form_widget(form.tour, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class = "col-sm-3 mb-3">
                         <label id = "coordenada">{{ruta.coordenadaInicio}}</label>
                     </div>
                 </div>

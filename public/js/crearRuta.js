@@ -131,6 +131,25 @@ $(function()
         $(".page-actions").css("visibility", "hidden");
     });
 
+    //Indica que el mapa es un modal
+    $("#map").dialog(
+    {
+        autoOpen: false, //No se autoabre
+        modal: true, //Es un modal
+        show: //Efectos al abrir
+        {
+            effect: "blind",
+            duration: 1000
+        },
+        hide: //Efectos al cerrar
+        { 
+            effect: "explode",
+            duration: 1000
+        },
+        width: 1000, //Altura
+        height: 600 //Ancho
+    });
+
     //Si escribimos la ruta en el input, devuelve las coordenadas sin ver el mapa
     $("#indicaRuta").on("keyup", function()
     {
@@ -471,7 +490,7 @@ function soltarItems(trash, gallery)
 
         if ( $modal.length ) 
         {
-            $modal.dialog( "open" );
+            $modal.dialog("open");
         }
         else 
         {
@@ -636,7 +655,7 @@ function quitarErrores()
 function generaMapa()
 {
     //Abre un modal con el mapa
-    $( "#map" ).dialog( "open" );
+    $("#map").dialog("open");;
 
     //Obtiene el input que indica la dirección de la ruta
     var direccion = $("#indicaRuta").val();
