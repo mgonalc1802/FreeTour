@@ -22,16 +22,5 @@
                 'rutas' => $rutas
             ]);
         }
-
-        #[Route('/listado', name: 'listado')] 
-        public function mostrarTour(): Response
-        {
-            
-
-            return $this->render('home.html.twig', 
-            [
-                'alumnos' => $alumnos,
-            ]);
-        }
     }
 ?>

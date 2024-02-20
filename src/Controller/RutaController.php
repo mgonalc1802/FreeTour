@@ -33,25 +33,32 @@ class RutaController extends AbstractController
     #[Route('/API/subirArchivos', name: "subirArchivos", methods: ['POST'])]
     public function subirArchivos(Request $request): JsonResponse
     {
-        // Definiciones
+        //Indica la ruta de las imágenes
         $to_path = "images/ruta";
 
-        // Mover el archivo
+        //Mover el archivo
         $archivo = $request->files->get('file');
 
+        //Si archivo no está vacío
         if ($archivo) 
         {
+            //Genera la ruta del archivo
             $nuevoArchivo = $to_path . "/" . $archivo->getClientOriginalName();
 
+            //Si se ha movido
             if ($archivo->move($to_path, $archivo->getClientOriginalName())) 
             {
+                //Devuelve un true
                 return new JsonResponse(["success" => true]);
             } 
+            //Si no
             else 
             {
+                //Devuelve un false
                 return new JsonResponse(["success" => false]);
             }
-        } 
+        }
+        //En caso de que esté vacío
         else 
         {
             return new JsonResponse(["success" => false, "error" => "No se ha proporcionado ningún archivo."]);
@@ -62,8 +69,10 @@ class RutaController extends AbstractController
     #[Route('/API/crearRuta', name: "crearRuta", methods: ['POST'])]
     public function new(Request $request, EntityManagerInterface $manager, ItemRepository $itemRepository): JsonResponse
     {
+        //Obtiene el json enviado
         $data = json_decode($request->getContent(), true);
         
+        //Distingue cada atributo del json
         $titulo = $data['titulo'];
         $fechaInicio = $data['fechaInicio'];
         $fechaFin = $data['fechaFin'];
@@ -74,8 +83,10 @@ class RutaController extends AbstractController
         $coordenada = $data['coordenadas'];
         $programacion = $data['programacion'];
 
+        //Si están vacíos
         if(empty($titulo) || empty($fechaInicio) || empty($fechaFin) || empty($aforo) || empty($descripcion) || empty($urlFoto) || empty($coordenada))
         {
+            //Lanza una excepción
             throw new NotFoundHttpException('No puede haber valores vacíos.');
         }
 
@@ -100,9 +111,13 @@ class RutaController extends AbstractController
             $nuevaRuta -> addItem($item);
         }
 
+        //Llama a la bdd
         $manager->persist($nuevaRuta);
+
+        //Actualiza la bdd
         $manager->flush();
 
+        //Devuelve un json
         return new JsonResponse(['idRuta' => $nuevaRuta->getId()], Response::HTTP_CREATED);
     }
 }

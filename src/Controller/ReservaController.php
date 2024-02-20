@@ -8,8 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\DomCrawler\Crawler;
 use App\Form\Type\ReservaType;
-use App\Repository\TourRepository;
-use App\Repository\ValoracionRepository;
+use App\Repository\{TourRepository, ValoracionRepository, ReservaRepository};
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\{Ruta, Reserva, User, Tour, Valoracion};
 
@@ -30,34 +29,17 @@ class ReservaController extends AbstractController
 
         //Obtiene todos los items
         $items = $ruta->getItem();
-        
+
         //Si se pulsa el submit
-        if ($form->isSubmitted() && $form->isValid()) 
+        if ($form->isSubmitted() && $form->isValid())
         {
-            //INTENTAR OBTENER A TRAVÉS DEL GETDATA LO DE FORMULARIO
-            // var_dump($form->getData());
-            //Renderiza la vista y obtén el contenido HTML
-            // $htmlContent = $this->renderView('reserva/new.html.twig', [
-            //     'ruta' => $ruta,
-            //     'tours' => $tours,
-            //     'items' => $items,
-            //     'form' => $form
-            // ]);
-            
-            // $crawler = new Crawler($htmlContent);
-
-            //Obtener el contenido de un elemento
-            // $tours = $crawler->filter('.tours option:selected')->html();
-
-            $tour = new Tour($tourRepository->findById("39"));
-
             //Crea una valoración nueva
             $valoracion = new Valoracion();
 
             //Añade datos a la valoración
             $valoracion->setGuia(-1);
             $valoracion->setRuta(-1);
-            
+
             //Genera la fecha actual
             $fechaActual = new \DateTime();
 
@@ -68,9 +50,9 @@ class ReservaController extends AbstractController
                 ->setFecha($fechaActual)
                 ->setHora($fechaActual)
                 ->setNumeroReservas($form->get('numero_reservas')->getData());
-            
+
             //Obtén la entidad Tour desde Reserva
-            $tour = $reserva->getTour(); 
+            $tour = $reserva->getTour();
 
             //Persiste manualmente la entidad Tour
             $entityManager->persist($tour);
@@ -84,6 +66,91 @@ class ReservaController extends AbstractController
             'tours' => $tours,
             'items' => $items,
             'form' => $form
+        ]);
+    }
+
+    #[Route('/misReservas', name: 'misReservas')]
+    public function actions(ReservaRepository $reservaRepository, TourRepository $tourRepository): Response
+    {
+        //Obtiene la id del usuario
+        $idUser = $this->getUser()->getId();
+        $misReservas = $reservaRepository->findByIdUser($idUser);
+
+        //Recorre mis reservas
+        if(empty($misReservas))
+        {
+            $error = "No tienes reservas.";
+            return $this->render('reserva/error.html.twig', [
+                'error' => $error
+            ]);
+        }
+        else
+        {
+            foreach ($misReservas as &$miReserva) 
+            {
+                //Obtiene el id del tour
+                $idsTour[] = $miReserva->getTour()->getId();
+            }
+
+            //Obtiene el
+            return $this->render('reserva/show.html.twig', [
+                'reservas' => $misReservas
+            ]);
+        }        
+    }
+
+    #[Route('/modificarReserva/{id}', name: 'modificarReserva')]
+    public function modificarReserva(EntityManagerInterface $entityManager, Request $request, Reserva $reserva): Response
+    {
+        //Si reserva está vacío
+        if (!$reserva) 
+        {
+            //Lanza una excepción
+            throw $this->createNotFoundException('No se encontró la reserva ');
+        }
+
+        //Si se obtiene una respuesta con el método POST
+        if ($request->isMethod('POST')) 
+        {
+            //Obtiene el nuevo valor
+            $nuevaCantidadPersonas = $request->request->get('personas');
+
+            //Lo cambia en la reserva
+            $reserva->setNumeroReservas($nuevaCantidadPersonas);
+
+            //Actualiza en la bdd
+            $entityManager->flush();
+
+            //Actualiza la página
+            return $this->redirectToRoute('misReservas');
+        }
+    }
+
+    #[Route('/cancelarReserva/{id}', name: 'cancelarReserva')]
+    public function cancelarReserva(EntityManagerInterface $entityManager, Request $request, Reserva $reserva): Response
+    {
+        //Si reserva está vacío
+        if (!$reserva) 
+        {
+            //Lanza una excepción
+            throw $this->createNotFoundException('No se encontró la reserva');
+        }
+
+        //Si se obtiene una respuesta con el método POST
+        if ($request->isMethod('POST')) 
+        {
+            //Eliminar la reserva
+            $entityManager->remove($reserva);
+
+            //Actualiza la bdd
+            $entityManager->flush();
+
+            //Actualiza la página
+            return $this->redirectToRoute('misReservas');
+        }
+
+        return $this->render('reservas/show.html.twig', [
+            'reserva' => $reserva,
         ]);
     }
 }

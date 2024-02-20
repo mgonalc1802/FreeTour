@@ -50,7 +50,9 @@ class ReservaType extends AbstractType
                     //Realiza la query
                     return $er->createQueryBuilder('t')
                         ->where('t.ruta_id = :id')
-                        ->setParameter('id', $rutaId);
+                        ->setParameter('id', $rutaId)
+                        ->andWhere('t.fecha > :val')
+                        ->setParameter('val', new \DateTime());
                 },
              ])
             ->add('Reserva', SubmitType::class)

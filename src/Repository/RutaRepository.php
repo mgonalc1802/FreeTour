@@ -22,27 +22,6 @@ class RutaRepository extends ServiceEntityRepository
         parent::__construct($registry, Ruta::class);
     }
 
-    public function crearRuta($titulo, $fechaInicio, $fechaFin, $aforo, $descripcion, $url_foto, $coordenada)
-    {
-        //Crea el objeto ruta
-        $nuevaRuta = new Ruta();
-
-        //Le añade propiedades
-        $nuevaRuta
-            ->setTitulo($titulo)
-            ->setCoordenadaInicio($coordenada)
-            ->setDescripcion($descripcion)
-            ->setUrlFoto($url_foto)
-            ->setAforo($aforo)
-            ->setProgramacion("");
-
-        //Indica que se realice la consulta
-        $this->manager->persist($nuevaRuta);
-
-        //Guarda la consulta
-        $this->manager->flush();
-    }
-
     public function findByTitulo($titulo): array
     {
         return $this->createQueryBuilder('r')
@@ -56,11 +35,14 @@ class RutaRepository extends ServiceEntityRepository
     public function findAll(): array
     {
         return $this->createQueryBuilder('r')
+                    ->andWhere('r.fechaFin > :fec')
+                    ->setParameter('fec', new \DateTime())
                     ->getQuery()
                     ->getResult()
         ;
     }
 
+    
 //    /**
 //     * @return Ruta[] Returns an array of Ruta objects
 //     */

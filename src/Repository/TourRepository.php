@@ -24,6 +24,8 @@ class TourRepository extends ServiceEntityRepository
     public function findAll(): array
     {
         return $this->createQueryBuilder('t')
+                    ->andWhere('t.fecha > :val')
+                    ->setParameter('val', new \DateTime())
                     ->getQuery()
                     ->getResult()
         ;
@@ -34,6 +36,8 @@ class TourRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('t')
                     ->andWhere('t.ruta_id = :val')
                     ->setParameter('val', $idRuta)
+                    ->andWhere('t.fecha > :fec')
+                    ->setParameter('fec', new \DateTime())
                     ->getQuery()
                     ->getResult()
         ;

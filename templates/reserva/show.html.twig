@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mis Reservas{% endblock %}
+
+{% block body %}
+    <link rel = "stylesheet" href = "/CSS/estilo/misReservas.css" type = "text/css">
+
+    <div class = "contenedor">
+        <table border="1" id="tabla1">
+            <thead>
+                <tr>
+                    <th>RUTA</th>
+                    <th>FECHA</th>
+                    <th>HORA</th>
+                    <th>PERSONAS</th>
+                    <th>ACCIÓN</th>
+                </tr>
+            </thead>
+            <tbody>
+            {# {% for reserva in reservas %}
+                <tr>
+                    <td>{{reserva.tour.rutaid}}</td>
+                    <td>{{reserva.tour.hora|date('H:i')}}</td>
+                    <td>{{reserva.tour.fecha|date('d-m-Y')}}</td>
+                    <td><input type = "number" class = "personas" name = "personas" value = "{{reserva.numeroreservas}}"></td>
+                    <td>
+
+                        <input type = "button" class = "tours" name = "modificar" value = "Modificar">
+                        <input type = "button" class = "tours" name = "cancelar" value = "Cancelar">
+                    </td>
+                </tr>
+            {% endfor %} #}
+
+            {% for reserva in reservas %}
+                <tr>
+                    <td>{{reserva.tour.rutaid}}</td>
+                    <td>{{reserva.tour.hora|date('H:i')}}</td>
+                    <td>{{reserva.tour.fecha|date('d-m-Y')}}</td>
+                    <td>
+                        <form method="post" action="{{ path('modificarReserva', {'id': reserva.id}) }}">
+                            <input type="number" class="personas" name="personas" value="{{ reserva.numeroreservas }}">
+                    </td>
+                    <td>
+                            <button type="submit">Modificar</button>
+                        </form>
+                        <form method="post" action="{{ path('cancelarReserva', {'id': reserva.id}) }}">
+                            <button type="submit">Cancelar</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+{% endblock %}

@@ -21,6 +21,16 @@ class ReservaRepository extends ServiceEntityRepository
         parent::__construct($registry, Reserva::class);
     }
 
+    public function findByIdUser($value): array
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.usuario = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Reserva[] Returns an array of Reserva objects
 //     */

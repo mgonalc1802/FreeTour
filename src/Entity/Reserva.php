@@ -128,4 +128,9 @@ class Reserva
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return "ID: " . $this->getId() . " Fecha: " . $this->getFecha()->format('d-m-Y') . " Hora: " . $this->getHora()->format('H:i');
+    }
 }
