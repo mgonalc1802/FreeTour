@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\{User, Item, Provincia, Localidad};
+use App\Entity\{User, Item, Provincia, Localidad, Ruta};
 use EasyCorp\Bundle\EasyAdminBundle\Config\{Dashboard, Action, Actions, Crud, Assets, MenuItem};
 use EasyCorp\Bundle\EasyAdminBundle\Controller\{AbstractDashboardController, AbstractCrudController};
 use Symfony\Component\HttpFoundation\Response;
@@ -20,8 +20,21 @@ class DashboardController extends AbstractDashboardController
     #[Route('/admin/rutas', name: 'rutas')]
     public function rutas(): Response
     {
-        // return parent::index();
         return $this->render('ruta/index.html.twig');
+    }
+
+    #[Route('/admin/verRutas', name: 'verRutas')]
+    public function verRutas(): Response
+    {
+        return $this->render('ruta/show.html.twig');
+    }
+
+    #[Route('/modificarRuta/{id}', name: 'modificarRutas')]
+    public function update(Ruta $ruta): Response
+    {
+        return $this->render('ruta/update.html.twig', [
+            'ruta' => $ruta,
+        ]);
     }
 
     public function configureDashboard(): Dashboard
@@ -35,7 +48,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToUrl('Front', 'fa fa-home', "/");
         yield MenuItem::section('Entidades');
         yield MenuItem::linkToCrud('Usuarios', 'fa fa-users', User::class);
-        yield MenuItem::linkToRoute('Rutas', 'fa fa-map-o', "rutas");
+        yield MenuItem::linkToRoute('Rutas', 'fa fa-map-o', "verRutas");
         yield MenuItem::linkToCrud('Items', 'fa fa-inbox', Item::class);
         yield MenuItem::section('Localización');
         yield MenuItem::linkToCrud('Provincia', 'fa fa-map-marker', Provincia::class);

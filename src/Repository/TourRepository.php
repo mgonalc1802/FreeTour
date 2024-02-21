@@ -43,6 +43,16 @@ class TourRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findByRutaId($idRuta): array
+    {
+        return $this->createQueryBuilder('t')
+                    ->andWhere('t.ruta_id = :val')
+                    ->setParameter('val', $idRuta)
+                    ->getQuery()
+                    ->getResult()
+        ;
+    }
+
     public function findById($id): array
     {
         return $this->createQueryBuilder('t')

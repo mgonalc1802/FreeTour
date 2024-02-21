@@ -22,6 +22,16 @@ class RutaRepository extends ServiceEntityRepository
         parent::__construct($registry, Ruta::class);
     }
 
+    public function findById($id): array
+    {
+        return $this->createQueryBuilder('r')
+                    ->andWhere('r.id = :val')
+                    ->setParameter('val', $id)
+                    ->getQuery()
+                    ->getResult()
+        ;
+    }
+
     public function findByTitulo($titulo): array
     {
         return $this->createQueryBuilder('r')

@@ -1,0 +1,111 @@
+{% include '@EasyAdmin/page/content.html.twig' %}
+
+<div id = "modRuta">
+    <!-- Cargar archivos JS de JQuery UI -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src = "/js/crearRuta.js"></script> 
+    <script type = "text/javascript" src="/js/jquery.richtext.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+    
+    <!-- Cargar los CSS de JQuery UI -->
+    {# <link rel = "stylesheet" href = "CSS/jquery/jquery-ui.css" type = "text/css"> #}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel = "stylesheet" href = "/CSS/jquery/jquery-ui.structure.css" type = "text/css">
+    <link rel = "stylesheet" href = "/CSS/jquery/jquery-ui.theme.css" type = "text/css">
+    <link rel = "stylesheet" href = "https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="/css/jquery/richtext.min.css">
+    <link rel = "stylesheet" href = "{{ asset('css/estilo/crearRuta.css') }}" type = "text/css">
+
+    <form action = "/admin?routeName = rutas" method="post" enctype="multipart/form-data">
+
+        <label id = "idRuta">{{ruta.id}}</label>
+
+        <div id = "parte1">
+            <div class = "row">
+                <h2>Atributos</h2>
+                <div class = "col-sm-5 mb-3">
+                    <!-- Título -->
+                    <label for = "titulo">Título:</label>
+                    <input type = "text" id = "titulo" name = "titulo" maxlength = "100" value = "{{ruta.titulo}}" required>
+                    <label class = "errores" id = "errTit">Introduce un titulo</label>
+                </div>
+                
+                <div class = "col-sm-1 mb-3">
+                    <!-- Fechas -->
+                    <div id = "fecSali">
+                        <label for = "inicio">Fecha Inicio:</label>
+                        <input type = "text" name = "salida" id = "salida" value = "{{ruta.fechaComienzo.format('d-m-Y')}}">
+
+                    </div>
+                </div>
+                
+                <div class = "col-sm-1 mb-3">
+                    <div id = "fecLleg">
+                        <label for = "Fin">Fecha Fin:</label>
+                        <input type = "text" name = "llegada" id = "llegada"  value = "{{ruta.fechaFin.format('d-m-Y')}}">
+                    </div>
+                </div>
+
+                <div class = "col-sm-1 mb-3">
+                    <!-- Aforo -->
+                    <label for = "aforo">Aforo:</label>
+                    <input type = "number" id = "aforo" name = "aforo" min = "1" max = "20"  value = "{{ruta.aforo}}" required>
+                </div>
+
+                <div class = "col-sm-4 mb-3">
+                    <!-- Foto -->
+                    <label for="image" id = "image">Subir imagen</label>
+                    <input type="file" class="form-control-file mt-2" name="file" id="imagen">
+                    <label class = "errores" id = "errImg">Inserta una imagen</label>
+                </div>
+            </div>  
+            
+            <div class = "row">
+                <div class = "col-sm-4 mb-3">
+                    <!-- Coordenada de Inicio -->
+                    <label for = "coordenada_inicio">Punto de Inicio:</label>
+                    <input type = "text" id = "indicaRuta" name = "indicaRuta" maxlength = "255"autocompleted>
+                    <label class = "errores" id = "errDir">Introduce una dirección</label>
+                </div>
+
+                <div class = "col-sm-3 mb-3">
+                    <label >Coordenadas:</label>
+                    <input type = "text" id = "coordenadaInicio" name = "coordenada_inicio" maxlength = "255"  value = "{{ruta.coordenadaInicio}}" required disabled>
+                </div>
+
+                <div class = "col-sm-3 mb-3">
+                    <label style = "visibility: hidden;">Boton</label>
+                    <button id = "buscarMapa">Ver Mapa</button>
+                </div>
+            </div>
+
+            <div class = "row">
+                <!-- Descripción -->
+                <label for = "descripcion">Descripción:</label>
+                <div class = "page-wrapper box-content">
+                    <textarea id = "descripcion" class = "textArea" name = "example"> {{ruta.descripcion}}</textarea>
+                </div>
+                <label class = "errores" id = "errDes">Introduce una descripción</label>
+
+            </div>
+            
+            <div class = "row">
+                <div class = "col-sm-5 mb-3">
+                </div>
+                
+                <div class = "col-sm-2 mb-3">
+                    <button name = "Modificar" id = "modificar" >Modificar</button>
+                </div>
+
+                <div class = "col-sm-5 mb-3">
+                </div>
+            </div>
+        </div>
+        <div id = "map"></div>            
+
+    </form>
+
+</div>

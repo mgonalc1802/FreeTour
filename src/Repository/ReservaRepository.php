@@ -31,6 +31,16 @@ class ReservaRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findByIdTour($idTour): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('tour = :val')
+            ->setParameter('val', $idTour)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Reserva[] Returns an array of Reserva objects
 //     */

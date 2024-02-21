@@ -213,4 +213,18 @@ class Ruta
     {
         return $this->titulo;
     }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'titulo' => $this->getTitulo(),
+            'coordenadaInicio' => $this->getCoordenadaInicio(),
+            'descripcion' => $this->getDescripcion(),
+            'urlFoto' => $this->getUrlFoto(),
+            'aforo' => $this->getAforo(),
+            'fechaComienzo' => $this->getFechaComienzo()->format("Y-m-d"),
+            'fechaFin' => $this->getFechaFin()->format("Y-m-d")
+        ];
+    }
 }

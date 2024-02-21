@@ -8,9 +8,12 @@ $(function()
     var crearSalir = '<button class="crearSalir btn btn-primary action-save" type="submit" name="ea[newForm][btn]" value="saveAndReturn" data-action-name="saveAndReturn" form="new-User-form">\
                         <span class="btn-label"><span class="action-label">Crear</span></span>\
                       </button>';
+
+    //Lo introduce en el contenedor de easyadmin
+    $(".content").append($("#modRuta"));
                       
     //Obtiene el header de la plantilla de easyAdmin
-    $(".content-header-title h1").append('Rutas');
+    $(".content-header-title h1").append('Crear/Modificar Ruta');
     $(".page-actions").append(crearSalir);
     $(".page-actions").append(crearOther);
 
@@ -155,6 +158,16 @@ $(function()
     {
         //Llama al método para devolver las coordenadas.
         devuelveCoordenadas($("#indicaRuta").val())
+    })
+
+    $("#modificar").click(function(ev)
+    {
+        //Previene el submit que realiza por defecto
+        ev.preventDefault();
+
+        //Llama al método AJAX para modificar ruta
+        guardarRuta();
+
     })
 
     //Ejecuta su evento click
@@ -762,7 +775,7 @@ function subirFoto()
 
         $.ajax(
         {
-            url: 'API/subirArchivos',
+            url: '/API/subirArchivos',
             type: 'post',
             data: formData,
             dataType: "json",
@@ -789,7 +802,7 @@ function traerItems(elemento, filtro, valor)
     //Llamada AJAX para obtener los items
     $.ajax(
     {
-        url: "API/item/" + filtro + "/" + valor, //Indica la URL
+        url: "http://127.0.0.1:8000/API/item/" + filtro + "/" + valor, //Indica la URL
         method: "get", //Indica el método
         dataType: "JSON", //Indica como viene
         cache: false,
@@ -804,10 +817,10 @@ function traerItems(elemento, filtro, valor)
                 liElement.append('<h5 class="ui-widget-header">' + option.titulo + '</h5>');
 
                 //Añade la imagen
-                liElement.append('<img src="images/items/' + option.foto + '" alt="' + valor + '" width="96" height="72">');
+                liElement.append('<img src="/images/items/' + option.foto + '" alt="' + valor + '" width="96" height="72">');
                 
                 //Añade el borrar link
-                liElement.append('<a href="images/items/' + option.foto + '" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>');
+                liElement.append('<a href="/images/items/' + option.foto + '" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>');
 
                 // Append the list item to the provided element
                 elemento.append(liElement);
@@ -829,4 +842,45 @@ function traerItems(elemento, filtro, valor)
             console.log(err); 
         }
     })
+}
+
+function guardarRuta()
+{
+    //Obtiene los datos del formulario
+    var id = $("#idRuta")[0].innerText; //Indica que es un array debido a que obtiene el elemeno completo.
+    var titulo = $("#titulo").val();
+    var descripcion = $("#descripcion").val();   
+    var fechaComienzo = $("#salida").val().split('/').reverse().join('-');
+    var fechaFin = $("#llegada").val().split('/').reverse().join('-');
+    var aforo = parseInt($("#aforo").val());
+    var foto = subirFoto();
+    var coordenadas = $("#coordenadaInicio").val();
+    var descripcion = $("#descripcion").val();
+
+    var json = 
+    {
+        "id": id,
+        "titulo": titulo,
+        "fechaInicio": fechaComienzo,
+        "fechaFin": fechaFin,
+        "aforo": aforo,
+        "descripcion": descripcion,
+        "url_foto": foto,
+        "coordenadas": coordenadas
+    };
+
+    //Llamada AJAX que se encarga de insertar Ruta
+    $.ajax(
+        {
+            url: "/API/modificarRuta",
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(json), 
+            contentType: 'application/json', 
+            processData: false,
+            success: function (response) 
+            {
+                window.location.href = "/admin?routeName=verRutas";
+            }
+        });
 }

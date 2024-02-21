@@ -1,0 +1,63 @@
+{% include '@EasyAdmin/page/content.html.twig' %}
+
+<div id = "verRuta">
+    <!-- Cargar archivos JS de JQuery UI -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src = "js/verRuta.js"></script> 
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+    
+    <!-- Cargar los CSS de JQuery UI -->
+    {# <link rel = "stylesheet" href = "CSS/jquery/jquery-ui.css" type = "text/css"> #}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel = "stylesheet" href = "CSS/jquery/jquery-ui.structure.css" type = "text/css">
+    <link rel = "stylesheet" href = "CSS/jquery/jquery-ui.theme.css" type = "text/css">
+    <link rel = "stylesheet" href = "https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/jquery/richtext.min.css">
+    {# <link rel = "stylesheet" href = "{{ asset('css/estilo/verRuta.css') }}" type = "text/css"> #}
+
+    <table class="table datagrid ">
+        <thead>
+            <tr>
+                <th data-column="titulo" class="  header-for-field-email text-" dir="ltr">
+                    <a href="#">
+                        Título 
+                    </a>
+                </th>
+                <th data-column="fechaInicio" class="  header-for-field-text text-" dir="ltr">
+                    <a href="#">
+                        Fecha Inicio 
+                    </a>
+                </th>
+                <th data-column="fechaFin" class="  header-for-field-text text-" dir="ltr">
+                    <a href="#">
+                        Fecha Fin
+                    </a>
+                </th>
+
+                <th data-column="aforo" class="  header-for-field-text text-" dir="ltr">
+                    <a href="#">
+                        Aforo
+                    </a>
+                </th>
+
+                <th data-column="url_foto" class=" field-virtual header-for-field-image text-center" dir="ltr">
+                    <span>Url Foto</span>
+                </th>
+
+                <th class="actions-as-dropdown-table-head" dir="ltr">
+                    <span class="sr-only">Actions</span>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+        </tbody>
+
+        <tfoot>
+        </tfoot>
+    </table>
+
+</div>

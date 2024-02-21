@@ -161,6 +161,12 @@ td
     padding: 10px;
 }
 
+#idRuta
+{
+    display: none;
+}
+
+
 #seleccionables, #labelSelec
 {
     display: flex;
