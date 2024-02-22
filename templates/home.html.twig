@@ -11,7 +11,14 @@
     <div class = "grid-container">
     <article class = "video-sec-wrap">
 			<div class = "video-sec">
-				<h1 class = "video-sec-title">Free Tours Disponibles</h1>
+				<div id = "tituloPrin">
+					<h1 class = "video-sec-title">Free Tours Disponibles</h1>
+					<div id = "filtraRutas">
+						<input type = "text">
+						<button>Filtrar</button>
+					</div>
+					
+				</div>
 				<ul class = "video-sec-middle" id="vid-grid">
 					{% for ruta in rutas %}
 						<li class = "thumb-wrap">

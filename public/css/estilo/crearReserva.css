@@ -1,23 +1,28 @@
-.contenedor 
+.contenedor, .carousel-inner, #theCarousel
 {
-    margin: 4em;
-}
-
-.imagen 
-{
-    position: absolute;
-    width: 650px;
+    margin-left: 2em;
     height: 400px;
-    visibility: hidden;
-    opacity: 0;
+    width: 700px;
 }
 
-.imagen img
+.descripRuta
 {
-    height: 100%;
-    position: relative;
-    left: 45%;
-    transform: translateX(-52%);
+    font-size: large;
+}
+
+h2, h3
+{
+    font-weight: bold;
+}
+
+.descripItems
+{
+    font-size: medium;
+}
+
+.tituItems h4
+{
+    color: rgb(70, 69, 69);
 }
 
 .texto 
@@ -30,45 +35,9 @@
     font-weight: bold;
 }
 
-.contenedor a
-{
-    position: absolute;
-    text-decoration: none;
-    color: white;
-    font-size: 36px;
-    top : 50%;
-    right: 90%;
-    transform: translateY(-50%);
-}
-
 .siguiente 
 {
     left: 96%;
-}
-
-.puntos 
-{
-    position: absolute;
-    top: 93%;
-    width: 100%;
-    margin-left: 20px;
-    text-align: center;
-}
-
-.punto 
-{
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    background-color: white;
-    border-radius: 50%;
-    margin-right: 5px;
-}
-
-.punto:hover 
-{
-    cursor: pointer;
-    background-color: gray;
 }
 
 .contenedor a:hover 
@@ -96,39 +65,15 @@
     margin-left: 2em;
 }
 
-#containerReserva
-{
-    width: 100%;
-    min-height: 100vh;
-}
-
-table 
-{
-    width: 100%;
-    margin-top: 0.5em;
-    border-collapse: collapse;
-}
-  
-thead 
-{
-    background-color: #f2f2f2;
-}
-
-th 
-{
-    padding: 10px;
-    text-align: left;
-}
-
-td 
-{
-    border: 1px solid #ddd;
-    padding: 10px;
-}
 
 .informacion
 {
-    margin-left: 3em;
+    margin-left: 6em;
+}
+
+.labelsInfor
+{
+    font-size: x-large;
 }
 
 #coordenada, #idUsuario
@@ -138,11 +83,138 @@ td
 
 #mapa 
 {
-    height: 400px; 
-    width: 100%;
+    height: 380px; 
+    width: 900px;
 }
 
 #reserva_numero_reservas
 {
     width: 70px;
+}
+
+.carousel-inner > .item > img, .carousel-inner > .item > a > img 
+{
+    width: 100%;
+}
+
+
+/* @media only screen and (max-width: 1456px) 
+{
+    .video-sec-middle 
+    {
+        grid-template-columns: repeat(4,1fr);
+    }
+}
+
+@media only screen and (max-width: 1200px) 
+{
+    .video-sec-middle 
+    {
+        grid-template-columns: repeat(3,1fr);
+    }
+}
+
+@media only screen and (max-width: 1100px) 
+{
+    .video-sec-middle 
+    {
+        grid-template-columns: repeat(2,1fr);
+    }
+} */
+
+@media only screen and (max-width: 1024px) 
+{
+    body, html
+    {
+        width: 130%;
+    }
+
+    footer
+    {
+        margin-left: -100px;
+        font-size: 50px;
+        margin-top: 100px;
+    }
+
+    .descripRuta, .descripItems
+    {
+        font-size: 50px;
+    }
+
+    #reserva_numero_reservas
+    {
+        width: 200px;
+        height: 50px;
+    }
+
+    #reserva_tour
+    {
+        width: 100px;
+        height: 50px;
+    }
+
+    h2
+    {
+        font-size: 90px;
+    }
+
+    h3
+    {
+        font-size: 70px
+    }
+
+    h4
+    {
+        font-size: 60px;
+    }
+
+    h5
+    {
+        font-size: 60px;
+    }
+
+    .labelsInfor
+    {
+        font-size: 60px;
+    }
+
+    #labelInf
+    {
+        margin-top: 20px;
+        margin-left: 2em;
+    }
+
+    .contenedor, .carousel-inner, #theCarousel
+    {
+        margin-left: 30px;
+        height: 900px;
+        width: 1500px;
+    }
+
+    #containerReserva
+    {
+        font-size: 50px;
+    }
+
+    .tituloReserva
+    {
+        font-size: 100px;
+        margin-left: 1em;
+    }
+
+    .informacion
+    {
+        margin-left: 2em;
+    }
+
+    #mapa
+    {
+        height: 600px; 
+        width: 1500px;
+    }
+
+    .navbar-collapse.collapse
+    {
+        display: inline;
+    }
 }

@@ -97,6 +97,14 @@
     font-size: 1.2em;
 }
 
+#tituloPrin
+{
+    display: flex;
+    align-items: first baseline;
+    justify-content: space-between;
+}
+
+
 @media only screen and (max-width: 1456px) 
 {
     .video-sec-middle 
@@ -105,7 +113,7 @@
     }
 }
 
-@media only screen and (max-width: 1024px) 
+@media only screen and (max-width: 1200px) 
 {
     .video-sec-middle 
     {
@@ -113,7 +121,7 @@
     }
 }
 
-@media only screen and (max-width: 756px) 
+@media only screen and (max-width: 1100px) 
 {
     .video-sec-middle 
     {
@@ -121,10 +129,35 @@
     }
 }
 
-@media only screen and (max-width: 496px) 
+@media only screen and (max-width: 1024px) 
 {
+    h1
+    {
+        font-size: 70px;
+    }
+
+    #tituloPrin
+    {
+        display: inline;
+    }
+
+    header img
+    {
+        height: 50px;
+    }
+
     .video-sec-middle 
     {
         grid-template-columns: repeat(1,1fr);
+    }
+
+    .thumb
+    {
+        height: 80%;
+    }
+
+    .thumb-title
+    {
+        font-size: 50px;
     }
 }

@@ -6,11 +6,14 @@
     <script src = "/js/jquery-3.7.1.js"></script>
     <script src = "/js/jquery-ui.js"></script> 
     <script src = "/js/crearReserva.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
     <link rel = "stylesheet" href = "//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel = "stylesheet" href = "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel = "stylesheet" href = "https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel = "stylesheet" href = "/CSS/jquery/jquery-ui.structure.css" type = "text/css">
     <link rel = "stylesheet" href = "/CSS/jquery/jquery-ui.theme.css" type = "text/css">
@@ -19,95 +22,110 @@
     <div id = "containerReserva">
         <h1 class = "tituloReserva">{{ruta.titulo}}</h1>
         <div class = "row">
-            <div class="contenedor col-sm-4 mb-3">
-                <div class="imagen actual">
-                    <img src="/images/ruta/{{ruta.urlFoto}}" />
-                    <div class="texto"></div>
-                </div>
-                
-                {% for item in items %}
-                    <div class="imagen">
-                        <img src="/images/items/{{item.foto}}"/>
-                        <div class="texto">{{item.titulo}}</div>
-                    </div>
-                {% endfor %}
+            <div class="contenedor col-xl-5 col-sm-12">
+                <div id="theCarousel" class="carousel slide" data-ride="carousel">
+                    <!-- Indicadores -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#theCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#theCarousel" data-slide-to="1"></li>
+                        <li data-target="#theCarousel" data-slide-to="2"></li>
+                        <li data-target="#theCarousel" data-slide-to="3"></li>
+                    </ol>
 
-                            
-                <a href="#" class="anterior" onclick="anterior();">&#10094;</a>
-                <a href="#" class="siguiente" onclick="siguiente();">&#10095;</a>
-                
-                <div class="puntos">
-                    <span class="punto activo" onclick="mostrar(0);"></span>
-                    <span class="punto" onclick="mostrar(1);"></span>
-                    <span class="punto" onclick="mostrar(2);"></span>
-                    <span class="punto" onclick="mostrar(3);"></span>
-                </div>
-            </div>
-            <div class = "col-sm-1 mb-3">
-            </div>
-
-            <div class = "col-sm-6 mb-3">
-                <table border="1" id="tabla1">
-                    <thead>
-                        <tr>
-                            <th>DÍAS</th>
-                            <th>HORAS</th>
-                            <th>PLAZAS</th>
-                            <th>ACCIÓN</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for tour in tours %}
-                        <tr {% if loop.index > 5 %}style="display:none;"{% endif %}>
-                            <td>{{tour.fecha|date('d-m-Y')}}</td>
-                            <td>{{tour.hora|date('H:i')}}</td>
-                            <td>{{ruta.aforo}}</td>
-                            <td>
-                                {{ form_start(form) }}
-                                <input type="radio" class = "tours" name="tours" value="{{tour.id}}" checked> Seleccionar
-                            </td>
-                        </tr>
+                    <div class="carousel-inner" role="listbox">
+                        <div class="item active">
+                            <img src="/images/ruta/{{ruta.urlFoto}}" alt="Ilustracion" width = "300" height = "300"> 
+                        </div>
+                        {% for item in items %}
+                            <div class="item">
+                                <img src="/images/items/{{item.foto}}" alt="fotografia" width="600" height="424"> 
+                            </div>
                         {% endfor %}
-                    </tbody>
-                </table>
-                <br>
+
+                        <a class="left carousel-control" href="#theCarousel" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">anterior</span>
+                        </a>
+                        <a class="right carousel-control" href="#theCarousel" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">siguiente</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id = "labelInf" class = "col-xl-6 col-sm-11">
                 <div class = "row">
-                    <div class = "col-sm-2 mb-3">
-                        <label>Nº Personas: </label>
+                    <div class = "col-xl-6 col-sm-6">
+                        <label class = "labelsInfor">AFORO</label>
                     </div>
 
-                    <div class = "col-sm-2 mb-3">
+                    <div class = "col-xl-6 col-sm-4">
+                        <label class = "labelsInfor">HORA</label>
+                    </div>
+                </div>
+
+                <div class = "row">
+                    <div class = "col-sm-6">
+                        {{ruta.aforo}} Personas
+                    </div>
+
+                    <div class = "col-sm-6">
+                        {{tours[0].hora|date('H:i')}}
+                    </div>
+                </div>
+
+                <h2></h2>
+                <div class = "row">
+                    <div class = "col-xl-1 col-sm-3">
+                        {{ form_start(form) }}
+                        <label>Personas: </label>
+                    </div>
+
+                    <div class = "col-xl-2 col-sm-1">
                         {{ form_widget(form.numero_reservas, {'attr': {'class': 'form-control'}}) }}
                     </div>
 
-                    <div class = "col-sm-2 mb-3">
-                        <label>Seleccionar fecha: </label>
-                    </div>
-
-                    <div class = "col-sm-3 mb-3">
-                        {{ form_widget(form.tour, {'attr': {'class': 'form-control'}}) }}
-                    </div>
-
-                    <div class = "col-sm-3 mb-3">
+                    <div class = "col-xl-2 col-sm-2">
                         <label id = "coordenada">{{ruta.coordenadaInicio}}</label>
+                    </div>
+
+                    <div class = "col-xl-1 col-sm-2">
+                        <label>Fecha: </label>
+                    </div>
+
+                    <div class = "col-xl-3 col-sm-3">
+                        {{ form_widget(form.tour, {'attr': {'class': 'form-control'}}) }}
                     </div>
                 </div>
 
+               
                 <div class = "row">
-                    <div class = "col-sm-4 mb-3">
-                    </div>
-
-                    <div class = "col-sm-5 mb-3">
-                        {% if  is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') or is_granted('ROLE_GUIA') %}
-                             {{ form_end(form) }}
-                        {% else %}
+                    {% if  is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') or is_granted('ROLE_GUIA') %}
+                        <div class = "col-xl-5 co-sm-3">
+                        </div>
+                        
+                        <div class = "col-xl-5 col-mb-3">
+                            {{ form_end(form) }}
+                        </div>
+                       
+                    {% else %}
+                        <div class = "col-xl-4 col-sm-3">
+                        </div>
+                        
+                        <div class = "col-xl-5 col-sm-3">
                             <label class = "logueado">Para reservar, tienes que iniciar sesión</label><br>
                             <a class = "button" href = "/login">Iniciar Sesión</a>
                             <a class = "button" href = "/register">Registrarse</a>
-                        {% endif %}
-                    </div>
+                        </div>
+                    {% endif %}
+                </div>
 
-                    <div class = "col-sm-3 mb-3">
+                <div class = "col-xl-12 col-sm-12">
+                    <h2>Visión general del Tour</h2>
+                    <div class = "descripRuta">
+                        {{ruta.descripcion|raw}}
                     </div>
                 </div>
             </div>
@@ -115,42 +133,22 @@
 
         <div class = "informacion">
             <div class = "row">
-                <div class = "col-sm-5 mb-3">
-                    <h2>Visión general del Tour</h2>
-                    {{ruta.descripcion|raw}}
-                </div>
-                
-                <div class = "col-sm-1 mb-3">
-                </div>
-
-                <div class = "col-sm-5 mb-3">
-                    <h2>Cancelación Gratuita</h2>
-                    <div>
-                        Puedes cancelar tu reserva en cualquier momento. 
-                        Te recordamos cancelar las reservas a las que no puedas asistir. 
-                        Recibirás un correo indicando que tu reserva se ha cancelado con éxito.
-                    </div>
-                </div> 
-            </div>
-            <div class = "row">
-                <div class = "col-sm-5 mb-3">
+                <div class = "col-xl-5 col-sm-11">
                     <h3>Lugares a Visitar</h3>
                     {% for item in items %}
-                        <div>
+                        <div class = "tituItems">
                             <h4>{{item.titulo}}</h4>
-                            {{item.descripcion|raw}}
+                            <div class = "descripItems">
+                                {{item.descripcion|raw}}
+                            </div>
                             <br>
                         </div>
                     {% endfor %}
                 </div>
-                
-                <div class = "col-sm-1 mb-3">
-                </div>
 
-                <div class = "col-sm-5 mb-3">
+                <div class = "col-xl-5 col-sm-11">
                     <h2>Punto de Encuentro</h2>
                     <div id = "mapa"></div>
-
                 </div>
             </div>
         </div>
