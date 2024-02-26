@@ -75,9 +75,7 @@ class InformeController extends AbstractController
 
         //Crea el formulario
         $form = $this->createForm(InformeType::class, $informe);
-        $form->handleRequest($request);
-
-        
+        $form->handleRequest($request);        
 
         //Si se pulsa el submit
         if ($form->isSubmitted() && $form->isValid())

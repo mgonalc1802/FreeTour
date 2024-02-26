@@ -1,20 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ValoracionController!{% endblock %}
+{% block title %}Crear Valoración{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/estilo/crearValoracion.css') }}">
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Crear Valoración</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class = "row">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/localMD/FreeTour/src/Controller/ValoracionController.php'|file_link(0) }}">src/Controller/ValoracionController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/localMD/FreeTour/templates/valoracion/index.html.twig'|file_link(0) }}">templates/valoracion/index.html.twig</a></code></li>
-    </ul>
-</div>
+        <div class = "col-xl-3 col-sm-0">
+        </div>
+
+        <div class = "col-xl-4 col-sm-12">
+            {{ form_start(form) }}
+
+            <div class = "row">
+                <div class = "col-xl-4 col-sm-12">
+                    <div class="form-group">
+                        {{ form_label(form.guia, 'Guía: ') }}
+                        {{ form_widget(form.guia, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+
+                <div class = "col-xl-4 col-sm-12">
+                </div>
+                
+                
+                <div class = "col-xl-4 col-sm-12">
+                    <div class="form-group">
+                        {{ form_label(form.ruta, 'Ruta: ') }}
+                        {{ form_widget(form.ruta, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class = "row">
+                <div class = "col-xl-12 col-sm-12">
+                    <div class="form-group">
+                        {{ form_label(form.comentarios, 'Comentarios:') }}
+                        {{ form_widget(form.comentarios, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+
+        <div class = "col-xl-3 col-sm-0">
+        </div>
+    </div>
 {% endblock %}

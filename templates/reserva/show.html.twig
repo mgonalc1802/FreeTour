@@ -43,8 +43,13 @@
                     <td>
                             <button type="submit">Modificar</button>
                         </form>
+                        
                         <form method="post" action="{{ path('cancelarReserva', {'id': reserva.id}) }}">
                             <button type="submit">Cancelar</button>
+                        </form>
+
+                        <form method="post" action="{{ path('valorarReserva', {'id': reserva.valoracion.id}) }}">
+                            <button type="submit">Valorar</button>
                         </form>
                     </td>
                 </tr>
