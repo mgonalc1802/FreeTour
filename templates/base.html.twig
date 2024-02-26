@@ -37,6 +37,11 @@
                             <a class="nav-link" href="{{ path('misReservas') }}">Mis Reservas</a>
                         </li>
                     {% endif %}
+                    {% if is_granted('ROLE_GUIA') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('misTours') }}">Generar Informe</a>
+                        </li>
+                    {% endif %}
 
                     </ul>
 

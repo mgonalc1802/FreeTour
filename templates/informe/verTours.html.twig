@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mis Tours{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/estilo/misTours.css') }}">
+{% endblock %}
+
+{% block body %}
+    <h1>{{ruta.titulo}}</h1>
+
+    <table border = "1">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        {% for tour in tours %}
+            <tr>
+                <td>{{tour.fecha|date("d-m-Y")}}</td>
+                <td>{{tour.hora|date("H:m:s")}}</td>
+                <td>
+                    <button onclick = "window.location.href='/informe/id={{tour.id}}'">Informe</button>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

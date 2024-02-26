@@ -63,6 +63,34 @@ class TourRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findByGuia($nombre, $apellido): array
+    {
+        return $this->createQueryBuilder('t')
+                    ->andWhere('t.guia = :val')
+                    ->setParameter('val', $nombre . ' ' . $apellido)
+                    ->getQuery()
+                    ->getResult()
+        ;
+    }
+
+    public function findByRutaGuia($ruta, $nombre, $apellido): array
+    {
+        //Genera una fecha del día actual
+        $hoy = new \DateTime();
+
+        return $this->createQueryBuilder('t')
+                    ->andWhere('t.guia = :val')
+                    ->setParameter('val', $nombre . ' ' . $apellido)
+                    ->andWhere('t.ruta_id = :rut')
+                    ->setParameter('rut', $ruta)
+                    ->andWhere('t.fecha >= :hoyInicio AND t.fecha < :hoyFin') // Filtrar para el día actual
+                    ->setParameter('hoyInicio', $hoy->format('Y-m-d 00:00:00'))
+                    ->setParameter('hoyFin', $hoy->format('Y-m-d 23:59:59'))
+                    ->getQuery()
+                    ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Tour[] Returns an array of Tour objects
 //     */

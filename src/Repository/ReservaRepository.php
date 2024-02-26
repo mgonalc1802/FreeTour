@@ -33,8 +33,8 @@ class ReservaRepository extends ServiceEntityRepository
 
     public function findByIdTour($idTour): array
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('tour = :val')
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.tour = :val')
             ->setParameter('val', $idTour)
             ->getQuery()
             ->getResult()

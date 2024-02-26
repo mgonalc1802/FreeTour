@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Realizar Informe{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/estilo/crearInforme.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy6c+Y/iAJYwAjV6sz+H/2m5JabL5Jxbo" crossorigin="anonymous">
+{% endblock %}
+
+{% block body %}
+    <div class="crearInforme">
+        <h1>Generar Informe</h1>
+        
+        <div class = "row">
+            <div class = "col-xl-6 col-sm-12">
+                {{ form_start(form) }}
+
+                <div class = "row">
+                    <div class = "col-xl-2 col-sm-12">
+                        <div class="form-group">
+                            {{ form_label(form.participantes, 'Asistentes: ') }}
+                            {{ form_widget(form.participantes, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    
+                    <div class = "col-xl-2 col-sm-12">
+                        <div class="form-group">
+                            {{ form_label(form.dinero_recaudado, 'Dinero: ') }}
+                            {{ form_widget(form.dinero_recaudado, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+
+                    <div class = "col-xl-8 col-sm-12">
+                        <div class="form-group">
+                            {{ form_label(form.foto_grupal, 'Foto Grupal:') }}
+                            {{ form_widget(form.foto_grupal, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class = "row">
+                    <div class = "col-xl-12 col-sm-12">
+                        <div class="form-group">
+                            {{ form_label(form.descripcion, 'Descripción: ') }}
+                            {{ form_widget(form.descripcion, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+
+            <div class = "col-xl-1 col-sm-12">
+
+            </div>
+            
+            <div class = "col-xl-3 col-sm-12">
+                <label>Personas: </label>
+                <ol>
+                    {% for persona in personas %}
+                        <li><b>Nombre:</b> {{ persona.usuario.nombre }} {{ persona.usuario.apellido }} <b>Reservas:</b> {{ persona.numeroReservas }} </li>
+                    {% endfor %}
+                </ol>
+            </div>
+
+            <div class = "col-xl-2 col-sm-12">
+
+            </div>
+            
+        </div>
+        
+
+        
+    </div>
+{% endblock %}

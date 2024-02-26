@@ -1,28 +1,23 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Mis Rutas{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/estilo/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/estilo/misRutas.css') }}">
 {% endblock %}
 
-{% block importmap %}{{ importmap('app') }}{% endblock %}
-
 {% block body %}
-    <div class = "grid-container">
+
     <article class = "video-sec-wrap">
 		<div class = "video-sec">
 			<div id = "tituloPrin">
-				<h1 class = "video-sec-title">Free Tours Disponibles</h1>
-				<div id = "filtraRutas">
-					<input type = "text">
-					<button>Filtrar</button>
-				</div>
-				
+				<h1 class = "video-sec-title">Mis Rutas</h1>					
 			</div>
 			<ul class = "video-sec-middle" id="vid-grid">
 				{% for ruta in rutas %}
 					<li class = "thumb-wrap">
-						<a href="/reserva/id={{ruta.id}}">
+						<a href="/misTours/id={{ruta.id}}">
 							<img class = "thumb" src = "/images/ruta/{{ruta.urlFoto}}" alt = "{{ruta.urlFoto}}" width = "341" height="260">
 							<div class = "thumb-info">
 								<p class = "thumb-title">{{ruta.titulo}}</p>
