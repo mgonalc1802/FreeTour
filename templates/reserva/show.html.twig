@@ -4,7 +4,6 @@
 
 {% block body %}
     <link rel = "stylesheet" href = "/CSS/estilo/misReservas.css" type = "text/css">
-
     <div class = "contenedor">
         <table border="1" id="tabla1">
             <thead>
@@ -17,20 +16,7 @@
                 </tr>
             </thead>
             <tbody>
-            {# {% for reserva in reservas %}
-                <tr>
-                    <td>{{reserva.tour.rutaid}}</td>
-                    <td>{{reserva.tour.hora|date('H:i')}}</td>
-                    <td>{{reserva.tour.fecha|date('d-m-Y')}}</td>
-                    <td><input type = "number" class = "personas" name = "personas" value = "{{reserva.numeroreservas}}"></td>
-                    <td>
-
-                        <input type = "button" class = "tours" name = "modificar" value = "Modificar">
-                        <input type = "button" class = "tours" name = "cancelar" value = "Cancelar">
-                    </td>
-                </tr>
-            {% endfor %} #}
-
+            
             {% for reserva in reservas %}
                 <tr>
                     <td>{{reserva.tour.rutaid}}</td>
@@ -40,16 +26,16 @@
                         <form method="post" action="{{ path('modificarReserva', {'id': reserva.id}) }}">
                             <input type="number" class="personas" name="personas" value="{{ reserva.numeroreservas }}">
                     </td>
-                    <td>
-                            <button type="submit">Modificar</button>
+                    <td id = "botones">
+                            <button type="submit"><img class="w-100" src="images/modificar.png" alt="Imagen" height = "20"></button>
                         </form>
                         
                         <form method="post" action="{{ path('cancelarReserva', {'id': reserva.id}) }}">
-                            <button type="submit">Cancelar</button>
+                            <button type="submit"><img class="w-100" src="images/cerrar.png" alt="Imagen" height = "20"></button>
                         </form>
 
                         <form method="post" action="{{ path('valorarReserva', {'id': reserva.valoracion.id}) }}">
-                            <button type="submit">Valorar</button>
+                            <button type="submit"><img class="w-100" src="images/valorar.png" alt="Imagen" height = "20"></button>
                         </form>
                     </td>
                 </tr>

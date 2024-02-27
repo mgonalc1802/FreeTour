@@ -3,34 +3,81 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/estilo/home.css') }}">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"> 
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 {% endblock %}
 
 {% block importmap %}{{ importmap('app') }}{% endblock %}
 
 {% block body %}
-    <div class = "grid-container">
-    <article class = "video-sec-wrap">
-		<div class = "video-sec">
-			<div id = "tituloPrin">
-				<h1 class = "video-sec-title">Free Tours Disponibles</h1>
-				<div id = "filtraRutas">
-					<input type = "text">
-					<button>Filtrar</button>
-				</div>
-				
-			</div>
-			<ul class = "video-sec-middle" id="vid-grid">
-				{% for ruta in rutas %}
-					<li class = "thumb-wrap">
-						<a href="/reserva/id={{ruta.id}}">
-							<img class = "thumb" src = "/images/ruta/{{ruta.urlFoto}}" alt = "{{ruta.urlFoto}}" width = "341" height="260">
-							<div class = "thumb-info">
-								<p class = "thumb-title">{{ruta.titulo}}</p>
+
+
+	<div class="container-fluid p-0">
+        <div id="header-carousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="w-100" src="images/home.avif" alt="Imagen">
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                        <div class="p-3" style="max-width: 800px;">
+							<div id = "filtraRutas">
+								<h1>Bienvenidos a FreeTours.com</h1>
+								<div>
+									<input type = "text">
+									<button>Filtrar</button>
+								</div>
 							</div>
-						</a>
-					</li>
-				{% endfor %}
-			</ul>
-		</div>
-	</article>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img class="w-100" src="images/home2.avif" alt="Image">
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                        <div class="p-3" style="max-width: 900px;">
+                            <div id = "filtraRutas">
+								<h1>Bienvenidos a FreeTours.com</h1>
+								<div>
+									<input type = "text">
+									<button>Filtrar</button>
+								</div>
+							</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
+                <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                    <span class="carousel-control-prev-icon mb-n2"></span>
+                </div>
+            </a>
+            <a class="carousel-control-next" href="#header-carousel" data-slide="next">
+                <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                    <span class="carousel-control-next-icon mb-n2"></span>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class = "grid-container">
+		<article class = "video-sec-wrap">
+			<div class = "video-sec">
+				<div class="text-center mb-3 pb-3">
+					<h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Destinos</h6>
+					<h1>Explora los FreeTours disponibles</h1>
+				</div>
+				<ul class = "video-sec-middle" id="vid-grid">
+					{% for ruta in rutas %}
+						<li class = "thumb-wrap">
+							<a href="/reserva/id={{ruta.id}}">
+								<img class = "thumb" src = "/images/ruta/{{ruta.urlFoto}}" alt = "{{ruta.urlFoto}}" width = "341" height="260">
+								<div class = "thumb-info">
+									<p class = "thumb-title">{{ruta.titulo}}</p>
+								</div>
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</article>
+	</div>
 {% endblock %}
