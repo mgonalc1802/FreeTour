@@ -146,11 +146,12 @@ class Tour
     public function jsonSerialize(): array
     {
         return [
-            'id' => $this->getId(),
+            'idTour' => $this->getId(),
             'title' => $this->getRutaId()->getTitulo(),
             'start' => $this->getFecha()->format('Y-m-d') . ' ' . $this->getHora()->format('H:i:s'),
             'description' => $this->getRutaId()->getAforo(),
-            'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF))
+            'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF)),
+            'guia' => $this->getGuia(),
         ];
     }
 }

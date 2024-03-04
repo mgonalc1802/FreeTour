@@ -8,10 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use App\Repository\{RutaRepository, TourRepository, ReservaRepository};
+use App\Repository\{RutaRepository, TourRepository, ReservaRepository, ItemRepository};
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Ruta;
-use App\Repository\ItemRepository;
 
 class RutaController extends AbstractController
 {
@@ -225,7 +224,24 @@ class RutaController extends AbstractController
             //Devuelve el error
             return new JsonResponse("La ruta ya tiene reservas realizadas.");
         }
+    }
 
-        
+    #[Route('/API/rutas/localidad/{localidad}', name: "filtrarRutas", methods: ['GET'])]
+    public function rutasProvincia(RutaRepository $rutaRepository, $localidad): JsonResponse
+    {
+        //Obtiene las rutas de una determinada localidad
+        $rutas = $rutaRepository->findByItemLocalidad($localidad);
+
+        //Genera un array vacío
+        $rutasArray = [];
+
+        //Recorre las rutas
+        foreach($rutas as $ruta) 
+        {
+            $rutasArray[] = $ruta->jsonSerialize();
+        }
+
+        //Devuelve las rutas
+        return new JsonResponse($rutasArray);
     }
 }

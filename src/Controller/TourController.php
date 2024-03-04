@@ -95,4 +95,31 @@ class TourController extends AbstractController
         return new JsonResponse($toursArray);
     }
 
+    #[Route('/API/modificarTour', name: "modificarTour", methods: ['POST'])]
+    public function update(Request $request, EntityManagerInterface $manager, TourRepository $tourRepository): JsonResponse
+    {
+        //Obtiene el json enviado
+        $data = json_decode($request->getContent(), true);
+        
+        //Distingue cada atributo del json
+        $id = $data['id'];
+        $guia = $data['guia'];
+
+        //Busca el tour que se va a actualizar
+        $tourActualizado = $tourRepository->findById($id);
+
+        //Le añade sus propiedades
+        $tourActualizado[0]->setGuia($guia);
+
+         //Llama a la bdd
+         $manager->persist($tourActualizado[0]);
+
+         //Actualiza la bdd
+         $manager->flush();
+ 
+         //Devuelve un json
+         return new JsonResponse(['Tour Actualizado. ID: ' => $tourActualizado[0]->getId()], Response::HTTP_CREATED);
+
+    }
+
 }

@@ -42,6 +42,18 @@ class RutaRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findByItemLocalidad($localidad): array
+    {
+        return $this->createQueryBuilder('r')
+                    ->join('r.item', 'i') //Unir la tabla Item con el alias 'i'
+                    ->join('i.localidad', 'l') // Unir la tabla Localidad con el alias 'l'
+                    ->andWhere("l.nombre LIKE :localidad")
+                    ->setParameter('localidad', $localidad)
+                    ->getQuery()
+                    ->getResult()
+        ;
+    }
+
     public function findAll(): array
     {
         return $this->createQueryBuilder('r')

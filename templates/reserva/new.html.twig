@@ -122,6 +122,16 @@
                     {% endif %}
                 </div>
 
+                <div class = "col-xl-10 col-sm-12">
+                    {% if mostrarAforo == true %}
+                        <label class = "errores">Error: El aforo de ese tour está completo.</label>
+                    {% endif %}
+
+                    {% if mostrarPersonas == true %}
+                        <label class = "errores">Error: Las reservas tienen que ser entre 0 y 5 personas.</label>
+                    {% endif %}
+                </div>
+
                 <div id = "visionTour" class = "col-xl-12 col-sm-12">
                     <h2>Visión general del Tour</h2>
                     <div class = "descripRuta">

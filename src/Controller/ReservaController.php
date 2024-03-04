@@ -15,7 +15,7 @@ use App\Entity\{Ruta, Reserva, User, Tour, Valoracion};
 class ReservaController extends AbstractController
 {
     #[Route('/reserva/id={id}', name: 'crearReserva')]
-    public function new(Request $request, Ruta $ruta, TourRepository $tourRepository, EntityManagerInterface $entityManager, ValoracionRepository $valoraRepository): Response
+    public function new(ReservaRepository $reservaRepository, Request $request, Ruta $ruta, TourRepository $tourRepository, EntityManagerInterface $entityManager, ValoracionRepository $valoraRepository): Response
     {
         //Crea el objeto reserva
         $reserva = new Reserva();
@@ -30,42 +30,86 @@ class ReservaController extends AbstractController
         //Obtiene todos los items
         $items = $ruta->getItem();
 
-        //Si se pulsa el submit
+        //Si se pulsa el submit y el formulario está correcto
         if ($form->isSubmitted() && $form->isValid())
         {
-            //Crea una valoración nueva
-            $valoracion = new Valoracion();
+            //Obtiene todas las reservas de un tour
+            $tour = $form->get('tour')->getData();
 
-            //Añade datos a la valoración
-            $valoracion->setGuia(-1);
-            $valoracion->setRuta(-1);
+            //Obtiene las reservas del tour
+            $reservas = $reservaRepository->findByIdTour($tour);
 
-            //Genera la fecha actual
-            $fechaActual = new \DateTime();
+            $numeroReservas = 0;
 
-            //Agrega atributos
-            $reserva->setTour($form->get('tour')->getData())
-                ->setValoracion($valoracion)
-                ->setUsuario($this->getUser())
-                ->setFecha($fechaActual)
-                ->setHora($fechaActual)
-                ->setNumeroReservas($form->get('numero_reservas')->getData());
+            foreach ($reservas as $reserva) 
+            {
+                //Array de Json
+                $numeroReservas = $numeroReservas + $reserva->getNumeroReservas();
+            }
 
-            //Obtén la entidad Tour desde Reserva
-            $tour = $reserva->getTour();
+            if($numeroReservas >= 4)
+            {
+                return $this->render('reserva/new.html.twig', [
+                    'ruta' => $ruta,
+                    'tours' => $tours,
+                    'items' => $items,
+                    'form' => $form,
+                    'mostrarAforo' => true,
+                    'mostrarPersonas' => false
 
-            //Persiste manualmente la entidad Tour
-            $entityManager->persist($tour);
+                ]);
+            }
+            else
+            {
+                //Crea una valoración nueva
+                $valoracion = new Valoracion();
 
-            $entityManager->persist($reserva);
-            $entityManager->flush();
+                //Añade datos a la valoración
+                $valoracion->setGuia(-1);
+                $valoracion->setRuta(-1);
+
+                //Genera la fecha actual
+                $fechaActual = new \DateTime();
+
+                //Agrega atributos
+                $reserva->setTour($form->get('tour')->getData())
+                    ->setValoracion($valoracion)
+                    ->setUsuario($this->getUser())
+                    ->setFecha($fechaActual)
+                    ->setHora($fechaActual)
+                    ->setNumeroReservas($form->get('numero_reservas')->getData());
+
+                //Obtén la entidad Tour desde Reserva
+                $tour = $reserva->getTour();
+
+                //Persiste manualmente la entidad Tour
+                $entityManager->persist($tour);
+
+                $entityManager->persist($reserva);
+                $entityManager->flush();
+            }            
+        }
+
+        //Si se pulsa el submit pero no está validado
+        if ($form->isSubmitted() && !$form->isValid())
+        {
+            return $this->render('reserva/new.html.twig', [
+                'ruta' => $ruta,
+                'tours' => $tours,
+                'items' => $items,
+                'form' => $form,
+                'mostrarAforo' => false,
+                'mostrarPersonas' => true
+            ]);
         }
 
         return $this->render('reserva/new.html.twig', [
             'ruta' => $ruta,
             'tours' => $tours,
             'items' => $items,
-            'form' => $form
+            'form' => $form,
+            'mostrarAforo' => false,
+            'mostrarPersonas' => false
         ]);
     }
 

@@ -8,10 +8,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PdfController extends AbstractController
 {
-    #[Route('/pdf')]
+    #[Route('/pdf', name: 'pdf')]
     public function pdfAction(Pdf $knpSnappyPdf)
     {
-        $html = $this->renderView('home.html.twig');
+        $html = $this->renderView('pdf.html.twig');
 
         return new PdfResponse(
             $knpSnappyPdf->getOutputFromHtml($html),
