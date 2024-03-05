@@ -30,66 +30,6 @@ class ReservaController extends AbstractController
         //Obtiene todos los items
         $items = $ruta->getItem();
 
-        //Si se pulsa el submit y el formulario está correcto
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            //Obtiene todas las reservas de un tour
-            $tour = $form->get('tour')->getData();
-
-            //Obtiene las reservas del tour
-            $reservas = $reservaRepository->findByIdTour($tour);
-
-            $numeroReservas = 0;
-
-            foreach ($reservas as $reserva) 
-            {
-                //Array de Json
-                $numeroReservas = $numeroReservas + $reserva->getNumeroReservas();
-            }
-
-            if($numeroReservas >= 4)
-            {
-                return $this->render('reserva/new.html.twig', [
-                    'ruta' => $ruta,
-                    'tours' => $tours,
-                    'items' => $items,
-                    'form' => $form,
-                    'mostrarAforo' => true,
-                    'mostrarPersonas' => false
-
-                ]);
-            }
-            else
-            {
-                //Crea una valoración nueva
-                $valoracion = new Valoracion();
-
-                //Añade datos a la valoración
-                $valoracion->setGuia(-1);
-                $valoracion->setRuta(-1);
-
-                //Genera la fecha actual
-                $fechaActual = new \DateTime();
-
-                //Agrega atributos
-                $reserva->setTour($form->get('tour')->getData())
-                    ->setValoracion($valoracion)
-                    ->setUsuario($this->getUser())
-                    ->setFecha($fechaActual)
-                    ->setHora($fechaActual)
-                    ->setNumeroReservas($form->get('numero_reservas')->getData());
-
-                //Obtén la entidad Tour desde Reserva
-                $tour = $reserva->getTour();
-
-                //Persiste manualmente la entidad Tour
-                $entityManager->persist($tour);
-
-                $entityManager->persist($reserva);
-                $entityManager->flush();
-            }            
-        }
-
         //Si se pulsa el submit pero no está validado
         if ($form->isSubmitted() && !$form->isValid())
         {
@@ -99,8 +39,111 @@ class ReservaController extends AbstractController
                 'items' => $items,
                 'form' => $form,
                 'mostrarAforo' => false,
-                'mostrarPersonas' => true
+                'mostrarPersonas' => true,
+                'mostrarError' => false
             ]);
+        }
+
+        //Si se pulsa el submit y el formulario está correcto
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            //Obtiene las reserva del tour
+            $tour = $form->get('tour')->getData();
+
+            //Obtiene las reservas del usuario
+            $reservasUser = $this->getUser()->getReservas();
+
+            //Se genera una variable booleana
+            $valor = false;
+
+            //Recorre las reservas del usuario 
+            foreach ($reservasUser as $reservaUser) 
+            {
+                //Compara cada reserva con la que se quiere realizar
+                if($reservaUser->getTour()->getFecha()->format('d-m-Y') == $tour->getFecha()->format('d-m-Y'))
+                {
+                    //Se indica que ha entrado
+                    $valor = true;
+                }
+            }
+
+            //Obtiene todas las reservas del tour
+            $reservas = $reservaRepository->findByIdTour($tour);
+
+            //Genera el número de reservas
+            $numeroReservas = 0;
+
+            //Recorre todas las reservas del tour
+            foreach ($reservas as $reserva) 
+            {
+                //Guarda el numero de reservas que hay
+                $numeroReservas = $numeroReservas + $reserva->getNumeroReservas();
+            }
+
+            //Si se pasa del aforo
+            if($numeroReservas >= $ruta->getAforo())
+            {
+                //Muestra mensaje error
+                return $this->render('reserva/new.html.twig', [
+                    'ruta' => $ruta,
+                    'tours' => $tours,
+                    'items' => $items,
+                    'form' => $form,
+                    'mostrarAforo' => true,
+                    'mostrarPersonas' => false,
+                    'mostrarError' => false
+                ]);
+            }
+            else
+            {
+                //Si el tour ya ha sido reservado por ese usuario
+                if($valor == true)
+                {
+                    //Muestra mensaje de error
+                    return $this->render('reserva/new.html.twig', [
+                        'ruta' => $ruta,
+                        'tours' => $tours,
+                        'items' => $items,
+                        'form' => $form,
+                        'mostrarAforo' => false,
+                        'mostrarPersonas' => false,
+                        'mostrarError' => true
+                    ]);
+                }
+                else //Si está todo correcto
+                {
+                    //Crea una reserva para introducir
+                    $reservaInsertar = new Reserva();
+
+                    //Crea una valoración nueva
+                    $valoracion = new Valoracion();
+
+                    //Añade datos a la valoración
+                    $valoracion->setGuia(-1);
+                    $valoracion->setRuta(-1);
+
+                    //Genera la fecha actual
+                    $fechaActual = new \DateTime();
+
+                    //Agrega atributos
+                    $reservaInsertar->setTour($form->get('tour')->getData())
+                        ->setValoracion($valoracion)
+                        ->setUsuario($this->getUser())
+                        ->setFecha($fechaActual)
+                        ->setHora($fechaActual)
+                        ->setNumeroReservas($form->get('numero_reservas')->getData());
+
+                    //Obtén la entidad Tour desde Reserva
+                    $tour = $reservaInsertar->getTour();
+
+                    //Persiste manualmente la entidad Tour
+                    // $entityManager->persist($tour);
+
+                    $entityManager->persist($reservaInsertar);
+                    $entityManager->flush();
+                }
+                
+            }            
         }
 
         return $this->render('reserva/new.html.twig', [
@@ -109,7 +152,8 @@ class ReservaController extends AbstractController
             'items' => $items,
             'form' => $form,
             'mostrarAforo' => false,
-            'mostrarPersonas' => false
+            'mostrarPersonas' => false,
+            'mostrarError' => false
         ]);
     }
 

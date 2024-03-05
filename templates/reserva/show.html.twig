@@ -25,7 +25,7 @@
                     <td>{{reserva.tour.fecha|date('d-m-Y')}}</td>
                     <td>
                         <form method="post" action="{{ path('modificarReserva', {'id': reserva.id}) }}">
-                            <input type="number" class="personas" name="personas" value="{{ reserva.numeroreservas }}">
+                            <input type="number" class="personas" name="personas" value="{{ reserva.numeroreservas }}" max = "5">
                     </td>
                     <td id = "botones">
                             <button type="submit"><img class="w-100" src="images/modificar.png" alt="Imagen" height = "20"></button>
@@ -35,9 +35,11 @@
                             <button type="submit"><img class="w-100" src="images/cerrar.png" alt="Imagen" height = "20"></button>
                         </form>
 
-                        <form method="post" action="{{ path('valorarReserva', {'id': reserva.valoracion.id}) }}">
-                            <button type="submit"><img class="w-100" src="images/valorar.png" alt="Imagen" height = "20"></button>
-                        </form>
+                        {% if reserva.tour.fecha < "now" %}
+                            <form method="post" action="{{ path('valorarReserva', {'id': reserva.valoracion.id}) }}">
+                                <button type="submit"><img class="w-100" src="images/valorar.png" alt="Imagen" height = "20"></button>
+                            </form>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

@@ -130,6 +130,10 @@
                     {% if mostrarPersonas == true %}
                         <label class = "errores">Error: Las reservas tienen que ser entre 0 y 5 personas.</label>
                     {% endif %}
+
+                    {% if mostrarError == true %}
+                        <label class = "errores">Error: Ya tienes una reserva de ese tour.</label>
+                    {% endif %}
                 </div>
 
                 <div id = "visionTour" class = "col-xl-12 col-sm-12">
