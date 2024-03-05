@@ -21,8 +21,8 @@
             {% for reserva in reservas %}
                 <tr>
                     <td>{{reserva.tour.rutaid}}</td>
-                    <td>{{reserva.tour.hora|date('H:i')}}</td>
                     <td>{{reserva.tour.fecha|date('d-m-Y')}}</td>
+                    <td>{{reserva.tour.hora|date('H:i')}}</td>
                     <td>
                         <form method="post" action="{{ path('modificarReserva', {'id': reserva.id}) }}">
                             <input type="number" class="personas" name="personas" value="{{ reserva.numeroreservas }}" max = "5">
@@ -35,7 +35,7 @@
                             <button type="submit"><img class="w-100" src="images/cerrar.png" alt="Imagen" height = "20"></button>
                         </form>
 
-                        {% if reserva.tour.fecha < "now" %}
+                        {% if reserva.tour.fecha|date('Y-m-d') <= "now"|date('Y-m-d') %}
                             <form method="post" action="{{ path('valorarReserva', {'id': reserva.valoracion.id}) }}">
                                 <button type="submit"><img class="w-100" src="images/valorar.png" alt="Imagen" height = "20"></button>
                             </form>

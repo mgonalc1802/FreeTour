@@ -11,11 +11,13 @@ use App\Form\Type\ReservaType;
 use App\Repository\{TourRepository, ValoracionRepository, ReservaRepository};
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\{Ruta, Reserva, User, Tour, Valoracion};
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use App\Event\ReservaEvent;
 
 class ReservaController extends AbstractController
 {
     #[Route('/reserva/id={id}', name: 'crearReserva')]
-    public function new(ReservaRepository $reservaRepository, Request $request, Ruta $ruta, TourRepository $tourRepository, EntityManagerInterface $entityManager, ValoracionRepository $valoraRepository): Response
+    public function new(EventDispatcherInterface $disparador, ReservaRepository $reservaRepository, Request $request, Ruta $ruta, TourRepository $tourRepository, EntityManagerInterface $entityManager, ValoracionRepository $valoraRepository): Response
     {
         //Crea el objeto reserva
         $reserva = new Reserva();
@@ -138,6 +140,9 @@ class ReservaController extends AbstractController
 
                     //Persiste manualmente la entidad Tour
                     // $entityManager->persist($tour);
+
+                    $event = new ReservaEvent(['reserva'=>$reserva]);
+                    $disparador->dispatch($event, ReservaEvent::NAME);
 
                     $entityManager->persist($reservaInsertar);
                     $entityManager->flush();
